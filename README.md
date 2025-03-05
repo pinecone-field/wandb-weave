@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weave Search Evaluator
+
+A tool for evaluating and comparing vector search results with reranked results, using Pinecone for vector search and Weights & Biases (W&B) for tracking and evaluation.
+
+## Features
+
+- Vector similarity search using Pinecone
+- Cross-encoder reranking for improved relevance
+- Real-time evaluation metrics:
+  - Similarity scores
+  - Response latency
+  - Average relevance
+  - Result consistency
+- Interactive metadata exploration with hover tooltips
+- Support for multiple embedding models:
+  - Llama Text Embed v2
+  - GPT-4 Turbo
+  - E5 Large v2
+  - Cohere Embed v3.0
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- Pinecone API key
+- Weights & Biases account
+
+### Environment Setup
+
+Create a `.env.local` file with:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+PINECONE_API_KEY=your_pinecone_key
+WANDB_API_KEY=your_wandb_key
+WANDB_PROJECT=your_project_name
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How It Works
 
-## Learn More
+1. **Vector Search**:
+   - Converts query text to embeddings using selected model
+   - Performs similarity search using Pinecone
+   - Returns top K most similar documents
 
-To learn more about Next.js, take a look at the following resources:
+2. **Reranking**:
+   - Takes initial vector search results
+   - Uses cross-encoder model to rerank based on semantic similarity
+   - Provides more contextually relevant ordering
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Evaluation**:
+   - Calculates similarity scores and relevance metrics
+   - Tracks performance with W&B
+   - Compares vector search vs reranked results
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Routes
 
-## Deploy on Vercel
+- `/api/pinecone`: Handles vector similarity search
+- `/api/rerank`: Performs cross-encoder reranking
+- `/api/wandb`: Logs evaluation metrics and results
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Component Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The main `WeaveEvaluator` component provides:
+
+- Model selection
+- Query input
+- Results display with metrics
+- Interactive metadata exploration
+- Side-by-side comparison of vector and reranked results
+
+## Metrics Explained
+
+- **Similarity Score**: Direct measure of vector similarity (0-1)
+- **Response Time**: Latency in milliseconds
+- **Average Relevance**: Combined score from vector and rerank results
+- **Result Consistency**: Variation in scores across results
+
+## Contributing
+
+Pull requests welcome! Please ensure you update tests as appropriate.
+
+## License
+
+MIT
