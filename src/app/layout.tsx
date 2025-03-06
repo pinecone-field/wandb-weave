@@ -13,8 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Similarity and Reranking Evaluator",
-  description: "Similarity and Reranking Evaluator using Weave and Pinecone",
+  title: "Weave Response Evaluator",
+  description: "Evaluate and compare vector search and reranking results",
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-icon.png',
+    shortcut: '/shortcut-icon.png',
+  }
 };
 
 export default function RootLayout({
