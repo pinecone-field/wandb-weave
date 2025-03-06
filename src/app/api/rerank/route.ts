@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Pinecone } from '@pinecone-database/pinecone'
+import { PineconeResponse, RerankResponse } from '@/types'
 
 const calculateScoreSpread = (scores: number[]) => {
   return Math.max(...scores) - Math.min(...scores);
@@ -7,7 +8,7 @@ const calculateScoreSpread = (scores: number[]) => {
 
 export async function POST(request: Request) {
   try {
-    const { query, documents } = await request.json()
+    const { query, documents }: { query: string, documents: PineconeResponse[] } = await request.json()
     
     const pinecone = new Pinecone({
       apiKey: process.env.PINECONE_API_KEY!

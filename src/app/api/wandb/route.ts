@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import wandb from '@wandb/sdk'
+import { PineconeResponse, RerankResponse, WandbEvaluation } from '@/types'
 
 // Basic evaluation functions
 const checkRelevance = (query: string, response: any) => {
@@ -27,7 +28,7 @@ const checkSimilarityScores = (scores: number[]) => {
   };
 };
 
-const evaluateSearchResults = async (query: string, results: any[]) => {
+const evaluateSearchResults = async (query: string, results: PineconeResponse[]): Promise<WandbEvaluation> => {
   // Calculate basic metrics
   const meanScore = results.reduce((acc, r) => acc + r.score, 0) / results.length;
   const scores = results.map(r => r.score);
@@ -36,15 +37,16 @@ const evaluateSearchResults = async (query: string, results: any[]) => {
   );
 
   // Create evaluation object
-  const evaluation = {
+  const evaluation: WandbEvaluation = {
     metrics: {
       mean_score: meanScore,
       std_score: stdScore,
       latency: results[0]?.latency || 0
     },
     results: results.map(r => ({
-      text: r.metadata.text,
+      id: r.id,
       score: r.score,
+      metadata: r.metadata,
       latency: r.latency
     }))
   };

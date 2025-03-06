@@ -1,19 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import { PineconeResponse, RerankResponse, Metadata } from '@/types'
 
 interface QueryDetails {
   vector: string
   topK: number
   totalLatency: number
   queryLatency: number
-}
-
-interface PineconeResponse {
-  id: string
-  score: number
-  metadata: any
-  latency: number
 }
 
 interface Evaluation {
@@ -347,7 +341,7 @@ export default function WeaveEvaluator() {
                           {evaluation.response?.latency ? `${evaluation.response.latency.toFixed(2)}ms` : 'N/A'}
                         </p>
                         
-                        {Object.entries(evaluation.response.metadata).map(([key, value]) => (
+                        {Object.entries(evaluation.response.metadata as Metadata).map(([key, value]) => (
                           <MetadataTooltip key={key} label={key} value={value as string} />
                         ))}
                       </div>
@@ -389,7 +383,7 @@ export default function WeaveEvaluator() {
                           {result.latency ? `${result.latency.toFixed(2)}ms` : 'N/A'}
                         </p>
 
-                        {Object.entries(result.metadata).map(([key, value]) => (
+                        {Object.entries(result.metadata as Metadata).map(([key, value]) => (
                           <MetadataTooltip key={key} label={key} value={value as string} />
                         ))}
 

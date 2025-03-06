@@ -1,5 +1,6 @@
 import { Pinecone } from '@pinecone-database/pinecone'
 import { NextResponse } from 'next/server'
+import { PineconeResponse, Metadata } from '@/types'
 
 export async function GET(request: Request) {
   console.log('Pinecone API route called')
@@ -44,7 +45,7 @@ export async function GET(request: Request) {
     const fetchedResponses = queryResult.matches.map(match => ({
       id: match.id,
       score: match.score,
-      metadata: match.metadata,
+      metadata: match.metadata as Metadata,
       latency: queryEndTime - queryStartTime
     }))
     
