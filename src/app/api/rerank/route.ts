@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Pinecone } from '@pinecone-database/pinecone'
+import { PineconeResponse } from '@/types'
 
 const calculateScoreSpread = (scores: number[]) => {
   return Math.max(...scores) - Math.min(...scores);
@@ -7,7 +8,7 @@ const calculateScoreSpread = (scores: number[]) => {
 
 export async function POST(request: Request) {
   try {
-    const { query, documents } = await request.json()
+    const { query, documents }: { query: string, documents: PineconeResponse[] } = await request.json()
     
     const pinecone = new Pinecone({
       apiKey: process.env.PINECONE_API_KEY!
@@ -25,9 +26,9 @@ export async function POST(request: Request) {
     const result = await pinecone.inference.rerank(
       rerankingModel,
       query,
-      documents.map((doc: any) => ({
+      documents.map((doc: PineconeResponse) => ({
         id: doc.id,
-        text: doc.metadata.text
+        text: doc.metadata.text || ''
       })),
       rerankOptions
     )
@@ -57,8 +58,8 @@ export async function POST(request: Request) {
     })
 
     return NextResponse.json({ reranked })
-  } catch (error: any) {
-    console.error('Reranking error:', error)
+  } catch (error) {
+    console.error('Reranking error:', error instanceof Error ? error.message : 'Unknown error')
     return NextResponse.json({ error: 'Failed to rerank results' }, { status: 500 })
   }
 } 

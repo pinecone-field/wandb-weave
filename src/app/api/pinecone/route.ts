@@ -1,5 +1,6 @@
 import { Pinecone } from '@pinecone-database/pinecone'
 import { NextResponse } from 'next/server'
+import { Metadata } from '@/types'
 
 export async function GET(request: Request) {
   console.log('Pinecone API route called')
@@ -44,7 +45,7 @@ export async function GET(request: Request) {
     const fetchedResponses = queryResult.matches.map(match => ({
       id: match.id,
       score: match.score,
-      metadata: match.metadata,
+      metadata: match.metadata as Metadata,
       latency: queryEndTime - queryStartTime
     }))
     
@@ -61,15 +62,11 @@ export async function GET(request: Request) {
         queryLatency: queryEndTime - queryStartTime
       }
     })
-  } catch (error: any) {
+  } catch (error) {
     console.error('Pinecone API error:', {
-      message: error.message,
-      cause: error.cause,
-      stack: error.stack
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined
     })
-    return NextResponse.json({ 
-      error: 'Failed to fetch responses',
-      details: error.message
-    }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to fetch responses' }, { status: 500 })
   }
 } 

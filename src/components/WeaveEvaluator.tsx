@@ -1,19 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import { PineconeResponse, RerankResponse, Metadata } from '@/types'
 
 interface QueryDetails {
   vector: string
   topK: number
   totalLatency: number
   queryLatency: number
-}
-
-interface PineconeResponse {
-  id: string
-  score: number
-  metadata: any
-  latency: number
 }
 
 interface Evaluation {
@@ -177,7 +171,7 @@ export default function WeaveEvaluator() {
   const [loading, setLoading] = useState(false)
   const [queryText, setQueryText] = useState("This is an example query.")
   const [selectedModel, setSelectedModel] = useState(COMPATIBLE_MODELS[0])
-  const [rerankedResults, setRerankedResults] = useState<any[]>([])
+  const [rerankedResults, setRerankedResults] = useState<RerankResponse[]>([])
 
   const fetchResponses = async () => {
     console.log('Starting fetchResponses')
@@ -347,7 +341,7 @@ export default function WeaveEvaluator() {
                           {evaluation.response?.latency ? `${evaluation.response.latency.toFixed(2)}ms` : 'N/A'}
                         </p>
                         
-                        {Object.entries(evaluation.response.metadata).map(([key, value]) => (
+                        {Object.entries(evaluation.response.metadata as Metadata).map(([key, value]) => (
                           <MetadataTooltip key={key} label={key} value={value as string} />
                         ))}
                       </div>
@@ -389,7 +383,7 @@ export default function WeaveEvaluator() {
                           {result.latency ? `${result.latency.toFixed(2)}ms` : 'N/A'}
                         </p>
 
-                        {Object.entries(result.metadata).map(([key, value]) => (
+                        {Object.entries(result.metadata as Metadata).map(([key, value]) => (
                           <MetadataTooltip key={key} label={key} value={value as string} />
                         ))}
 
