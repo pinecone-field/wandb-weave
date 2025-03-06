@@ -1,6 +1,6 @@
 import { Pinecone } from '@pinecone-database/pinecone'
 import { NextResponse } from 'next/server'
-import { PineconeResponse, Metadata } from '@/types'
+import { Metadata } from '@/types'
 
 export async function GET(request: Request) {
   console.log('Pinecone API route called')

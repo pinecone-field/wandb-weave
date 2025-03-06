@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Pinecone } from '@pinecone-database/pinecone'
-import { PineconeResponse, RerankResponse } from '@/types'
+import { PineconeResponse } from '@/types'
 
 const calculateScoreSpread = (scores: number[]) => {
   return Math.max(...scores) - Math.min(...scores);
