@@ -8,6 +8,7 @@ interface QueryDetails {
   topK: number
   totalLatency: number
   queryLatency: number
+  modelUsed?: string
 }
 
 interface Evaluation {
@@ -23,30 +24,26 @@ interface EmbeddingModel {
   description: string
 }
 
+interface ErrorResponse {
+  error: string
+  details: string
+  modelUsed?: string
+  embeddingDimensions?: number
+  queryLatency?: number
+}
+
 const COMPATIBLE_MODELS: EmbeddingModel[] = [
   {
     id: "llama-text-embed-v2",
     name: "Llama Text Embed v2",
     dimensions: 1024,
-    description: "Meta's Llama 2 embedding model optimized for semantic similarity"
+    description: "High-performance dense embedding model optimized for text retrieval and ranking tasks"
   },
   {
-    id: "gpt-4-1106-preview",
-    name: "GPT-4 Turbo",
+    id: "multilingual-e5-large",
+    name: "Multilingual E5 Large",
     dimensions: 1024,
-    description: "Latest GPT-4 model with enhanced embedding capabilities"
-  },
-  {
-    id: "e5-large-v2",
-    name: "E5 Large v2",
-    dimensions: 1024,
-    description: "Efficient and accurate text embeddings"
-  },
-  {
-    id: "cohere-embed-english-v3.0",
-    name: "Cohere Embed v3.0",
-    dimensions: 1024,
-    description: "Optimized for English text similarity"
+    description: "Efficient dense embedding model for multilingual text, works well on messy data and short queries"
   }
 ]
 
@@ -56,8 +53,18 @@ const truncateText = (text: string, maxLength: number = 50) => {
   return cleanText.slice(0, maxLength) + '...';
 };
 
+const decodeUrlText = (text: string): string => {
+  try {
+    return decodeURIComponent(text.replace(/\+/g, ' '));
+  } catch (e) {
+    // If decoding fails, return original text
+    return text;
+  }
+};
+
 const MetadataTooltip = ({ label, value }: { label: string, value: string }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const decodedValue = decodeUrlText(value);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({ x: e.clientX, y: e.clientY });
@@ -67,7 +74,7 @@ const MetadataTooltip = ({ label, value }: { label: string, value: string }) => 
     <div key={label} className="group relative" onMouseMove={handleMouseMove}>
       <span className="font-medium text-xs">{label}:</span>
       <p className="text-xs break-words whitespace-pre-wrap">
-        {truncateText(value)}
+        {truncateText(decodedValue)}
       </p>
       
       <div className="fixed z-10 invisible group-hover:visible bg-gray-900 text-white p-4 rounded 
@@ -77,7 +84,7 @@ const MetadataTooltip = ({ label, value }: { label: string, value: string }) => 
              top: `${mousePos.y}px`, 
              left: `${mousePos.x}px` 
            }}>
-        {value}
+        {decodedValue}
       </div>
     </div>
   );
@@ -164,6 +171,41 @@ const MetricsSection = ({
   </div>
 );
 
+const ScoreComparison = ({ vectorScore, rerankScore }: { vectorScore: number, rerankScore: number }) => {
+  const scoreDiff = rerankScore - vectorScore;
+  const isSignificant = scoreDiff > 0.3; // 30% difference threshold
+  
+  let message = "";
+  let color = "text-gray-600";
+  
+  if (isSignificant) {
+    message = "🎯 Reranker strongly confirms this result's relevance despite lower vector similarity";
+    color = "text-green-600";
+  } else if (scoreDiff > 0) {
+    message = "✓ Reranker agrees with vector search on relevance";
+    color = "text-blue-600";
+  } else {
+    message = "⚠️ Reranker found this result less relevant than vector similarity suggested";
+    color = "text-yellow-600";
+  }
+
+  return (
+    <div className="mt-2 p-2 bg-gray-50 rounded">
+      <div className="text-sm">
+        <div className="flex justify-between mb-1">
+          <span>Vector Score:</span>
+          <span>{(vectorScore * 100).toFixed(1)}%</span>
+        </div>
+        <div className="flex justify-between">
+          <span>Rerank Score:</span>
+          <span>{(rerankScore * 100).toFixed(1)}%</span>
+        </div>
+      </div>
+      <p className={`text-xs mt-2 ${color}`}>{message}</p>
+    </div>
+  );
+};
+
 export default function WeaveEvaluator() {
   const [responses, setResponses] = useState<PineconeResponse[]>([])
   const [queryDetails, setQueryDetails] = useState<QueryDetails | null>(null)
@@ -172,22 +214,32 @@ export default function WeaveEvaluator() {
   const [queryText, setQueryText] = useState("This is an example query.")
   const [selectedModel, setSelectedModel] = useState(COMPATIBLE_MODELS[0])
   const [rerankedResults, setRerankedResults] = useState<RerankResponse[]>([])
+  const [error, setError] = useState<ErrorResponse | null>(null)
 
   const fetchResponses = async () => {
-    console.log('Starting fetchResponses')
+    // Clear all previous results
+    setError(null)
+    setResponses([])
+    setQueryDetails(null)
+    setEvaluations([])
+    setRerankedResults([])
+    
     setLoading(true)
     try {
-      console.log('Fetching from /api/pinecone with model:', selectedModel.id)
-      const res = await fetch(
-        `/api/pinecone?q=${encodeURIComponent(queryText)}&model=${selectedModel.id}`
-      )
-      console.log('Pinecone response:', res.status)
+      const res = await fetch(`/api/pinecone?q=${encodeURIComponent(queryText)}&model=${selectedModel.id}`)
       const data = await res.json()
-      console.log('Pinecone data:', data)
-      setResponses(data.responses)
-      setQueryDetails(data.queryDetails)
+      
+      if ('error' in data) {
+        setError(data)
+      } else {
+        setResponses(data.responses)
+        setQueryDetails(data.queryDetails)
+      }
     } catch (error) {
-      console.error('Error fetching responses:', error)
+      setError({
+        error: 'Request failed',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      })
     }
     setLoading(false)
   }
@@ -266,6 +318,9 @@ export default function WeaveEvaluator() {
             ))}
           </select>
           <p className="text-sm text-gray-500">{selectedModel.description}</p>
+          <p className="text-xs text-amber-600">
+            Note: Only Llama Text Embed v2 is currently compatible with the index. Other models may return no results.
+          </p>
         </div>
 
         <textarea
@@ -302,14 +357,81 @@ export default function WeaveEvaluator() {
         </div>
       )}
 
+      {error && (
+        <div className="bg-red-50 border-l-4 border-red-400 p-4 my-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">{error.error}</h3>
+              <div className="mt-2 text-sm text-red-700">
+                <p>{error.details}</p>
+                {error.modelUsed && (
+                  <p className="mt-1">Model used: {error.modelUsed}</p>
+                )}
+                {error.embeddingDimensions && (
+                  <p className="mt-1">Embedding dimensions: {error.embeddingDimensions}</p>
+                )}
+                {error.queryLatency && (
+                  <p className="mt-1">Query latency: {error.queryLatency.toFixed(2)}ms</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {queryDetails && (
         <div className="bg-gray-50 p-4 rounded-lg">
           <h3 className="text-lg font-medium mb-2">Query Details</h3>
           <div className="space-y-2 text-sm">
             <p><span className="font-medium">Vector:</span> {queryDetails.vector}</p>
+            <p><span className="font-medium">Model:</span> {queryDetails.modelUsed}</p>
             <p><span className="font-medium">Top K:</span> {queryDetails.topK}</p>
             <p><span className="font-medium">Total Latency:</span> {queryDetails.totalLatency.toFixed(2)}ms</p>
             <p><span className="font-medium">Query Latency:</span> {queryDetails.queryLatency.toFixed(2)}ms</p>
+          </div>
+        </div>
+      )}
+
+      {(evaluations.length > 0 || rerankedResults.length > 0) && (
+        <div className="p-4 border rounded-lg bg-gray-50">
+          <h3 className="text-lg font-medium mb-4">Overall Results Summary</h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Vector Search Summary */}
+            <div className="space-y-2">
+              <h4 className="text-sm font-medium text-gray-700">Vector Search Results ({evaluations.length})</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Average Similarity</p>
+                  <p className="text-2xl">{(evaluations.reduce((acc, e) => acc + e.response.score, 0) / evaluations.length * 100).toFixed(1)}%</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Average Latency</p>
+                  <p className="text-2xl">{(evaluations.reduce((acc, e) => acc + e.metrics.latency, 0) / evaluations.length).toFixed(1)}ms</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Reranking Summary */}
+            {rerankedResults.length > 0 && (
+              <div className="space-y-2">
+                <h4 className="text-sm font-medium text-gray-700">Reranked Results ({rerankedResults.length})</h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Average Score</p>
+                    <p className="text-2xl">{(rerankedResults.reduce((acc, r) => acc + r.rerank_score, 0) / rerankedResults.length * 100).toFixed(1)}%</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Average Latency</p>
+                    <p className="text-2xl">{(rerankedResults.reduce((acc, r) => acc + r.latency, 0) / rerankedResults.length).toFixed(1)}ms</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -328,22 +450,28 @@ export default function WeaveEvaluator() {
                       <div className="text-sm text-gray-600 space-y-2">
                         <div>
                           <span className="font-medium">ID:</span>
-                          <p className="break-all text-xs mt-1">{evaluation.response?.id || 'N/A'}</p>
+                          <p className="break-all text-xs mt-1">{decodeUrlText(evaluation.response?.id || 'N/A')}</p>
                         </div>
                         
-                        <p>
-                          <span className="font-medium">Similarity Score:</span>{' '}
-                          {evaluation.response?.score ? evaluation.response.score.toFixed(4) : 'N/A'}
-                        </p>
+                        <div className="space-y-1">
+                          <div className="flex justify-between">
+                            <span className="font-medium">Vector Similarity:</span>
+                            <span>{(evaluation.response?.score * 100).toFixed(1)}%</span>
+                          </div>
+                          <div className="h-6"></div>
+                          <div className="h-6"></div>
+                        </div>
                         
                         <p>
                           <span className="font-medium">Latency:</span>{' '}
                           {evaluation.response?.latency ? `${evaluation.response.latency.toFixed(2)}ms` : 'N/A'}
                         </p>
                         
-                        {Object.entries(evaluation.response.metadata as Metadata).map(([key, value]) => (
-                          <MetadataTooltip key={key} label={key} value={value as string} />
-                        ))}
+                        {Object.entries(evaluation.response.metadata as Metadata)
+                          .filter(([_, value]) => value && value.trim() !== '')
+                          .map(([key, value]) => (
+                            <MetadataTooltip key={key} label={key} value={decodeUrlText(value as string)} />
+                          ))}
                       </div>
 
                       <MetricsSection
@@ -370,22 +498,39 @@ export default function WeaveEvaluator() {
                       <div className="text-sm text-gray-600 space-y-2">
                         <div>
                           <span className="font-medium">ID:</span>
-                          <p className="break-all text-xs mt-1">{result.id}</p>
+                          <p className="break-all text-xs mt-1">{decodeUrlText(result.id)}</p>
                         </div>
                         
-                        <p>
-                          <span className="font-medium">Similarity Score:</span>{' '}
-                          {result.score.toFixed(4)}
-                        </p>
+                        <div className="space-y-1">
+                          <div className="flex justify-between">
+                            <span className="font-medium">Vector Similarity:</span>
+                            <span>{(result.score * 100).toFixed(1)}%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="font-medium">Rerank Score:</span>
+                            <span>{(result.rerank_score * 100).toFixed(1)}%</span>
+                          </div>
+                          {result.rerank_score > result.score * 1.5 ? (
+                            <div className="h-6 flex items-center">
+                              <p className="text-sm text-amber-600">
+                                ⚠️ Large discrepancy between vector and rerank scores
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="h-6"></div>
+                          )}
+                        </div>
                         
                         <p>
                           <span className="font-medium">Latency:</span>{' '}
                           {result.latency ? `${result.latency.toFixed(2)}ms` : 'N/A'}
                         </p>
 
-                        {Object.entries(result.metadata as Metadata).map(([key, value]) => (
-                          <MetadataTooltip key={key} label={key} value={value as string} />
-                        ))}
+                        {Object.entries(result.metadata as Metadata)
+                          .filter(([_, value]) => value && value.trim() !== '')
+                          .map(([key, value]) => (
+                            <MetadataTooltip key={key} label={key} value={decodeUrlText(value as string)} />
+                          ))}
 
                         <MetricsSection
                           score={result.score}
@@ -398,20 +543,6 @@ export default function WeaveEvaluator() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 p-4 border rounded-lg">
-            <h3 className="text-lg font-medium mb-4">Overall Results Summary (All {evaluations.length} Results)</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm font-medium">Average Similarity Score</p>
-                <p className="text-2xl">{(evaluations.reduce((acc, e) => acc + e.response.score, 0) / evaluations.length * 100).toFixed(1)}%</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium">Average Response Time</p>
-                <p className="text-2xl">{(evaluations.reduce((acc, e) => acc + e.metrics.latency, 0) / evaluations.length).toFixed(1)}ms</p>
               </div>
             </div>
           </div>

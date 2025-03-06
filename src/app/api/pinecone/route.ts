@@ -14,59 +14,81 @@ export async function GET(request: Request) {
     const pinecone = new Pinecone({
       apiKey: process.env.PINECONE_API_KEY!
     })
-    console.log('Pinecone client initialized')
+    console.log('Using model:', model)
     
     // Get index info first to verify dimensions
     const index = pinecone.index(process.env.PINECONE_INDEX_NAME!)
     const indexStats = await index.describeIndexStats()
     console.log('Index stats:', indexStats)
     
-    // Use Pinecone's inference API to generate embeddings
-    const embedding = await pinecone.inference.embed(
-      model,
-      [query],  // Wrap single query in array
-      { 
-        inputType: 'passage',  
-        truncate: 'END'
-      }
-    )
+    try {
+      // Use Pinecone's inference API to generate embeddings
+      const embedding = await pinecone.inference.embed(
+        model,
+        [query],
+        { 
+          inputType: 'passage',  
+          truncate: 'END'
+        }
+      )
 
-    console.log('Generated embedding')
-    const testQuery = {
-      // @ts-expect-error - Pinecone SDK type mismatch with actual response
-      vector: embedding.data[0]?.values || [],
-      topK: 10,
-      includeMetadata: true
-    }
-    const queryStartTime = performance.now()
-    const queryResult = await index.query(testQuery)
-    const queryEndTime = performance.now()
-    
-    const fetchedResponses = queryResult.matches.map(match => ({
-      id: match.id,
-      score: match.score,
-      metadata: match.metadata as Metadata,
-      latency: queryEndTime - queryStartTime
-    }))
-    
-    const totalTime = performance.now() - startTime
-    console.log('Query details:', { testQuery, latency: totalTime })
-    console.log('Fetched responses:', fetchedResponses)
-    
-    return NextResponse.json({ 
-      responses: fetchedResponses,
-      queryDetails: {
-        vector: 'Embedding vector (1024 dims)',
-        topK: testQuery.topK,
-        totalLatency: totalTime,
-        queryLatency: queryEndTime - queryStartTime
+      const values = 'values' in embedding.data[0] 
+        ? (embedding.data[0].values as number[])
+        : ('indices' in embedding.data[0] && 'values' in embedding.data[0] 
+          ? (embedding.data[0].values as number[])
+          : [])
+
+      console.log('Generated embedding with dimensions:', values.length)
+      const testQuery = {
+        vector: values,
+        topK: 10,
+        includeMetadata: true
       }
-    })
+      const queryStartTime = performance.now()
+      const queryResult = await index.query(testQuery)
+      const queryEndTime = performance.now()
+
+      if (!queryResult.matches?.length) {
+        return NextResponse.json({
+          error: 'No matches found',
+          details: 'The query returned no results. This may be due to using a different embedding model than what was used to create the index.',
+          modelUsed: model,
+          embeddingDimensions: values.length,
+          queryLatency: queryEndTime - queryStartTime
+        }, { status: 404 })
+      }
+      
+      const fetchedResponses = queryResult.matches.map(match => ({
+        id: match.id,
+        score: match.score,
+        metadata: match.metadata as Metadata,
+        latency: queryEndTime - queryStartTime
+      }))
+      
+      const totalTime = performance.now() - startTime
+      return NextResponse.json({ 
+        responses: fetchedResponses,
+        queryDetails: {
+          vector: `${values.length}-dimensional vector`,
+          topK: testQuery.topK,
+          totalLatency: totalTime,
+          queryLatency: queryEndTime - queryStartTime,
+          modelUsed: model
+        }
+      })
+    } catch (embeddingError) {
+      console.error('Embedding generation error:', embeddingError)
+      return NextResponse.json({
+        error: 'Failed to generate embeddings',
+        details: embeddingError instanceof Error ? embeddingError.message : 'Unknown embedding error',
+        modelUsed: model
+      }, { status: 400 })
+    }
   } catch (error) {
-    console.error('Pinecone API error:', {
-      message: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined
-    })
-    return NextResponse.json({ error: 'Failed to fetch responses' }, { status: 500 })
+    console.error('Pinecone API error:', error)
+    return NextResponse.json({ 
+      error: 'Failed to fetch responses',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 })
   }
 } 
