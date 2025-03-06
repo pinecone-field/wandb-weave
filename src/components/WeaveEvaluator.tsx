@@ -56,8 +56,7 @@ const truncateText = (text: string, maxLength: number = 50) => {
 const decodeUrlText = (text: string): string => {
   try {
     return decodeURIComponent(text.replace(/\+/g, ' '));
-  } catch (e) {
-    // If decoding fails, return original text
+  } catch {
     return text;
   }
 };
@@ -170,41 +169,6 @@ const MetricsSection = ({
     </div>
   </div>
 );
-
-const ScoreComparison = ({ vectorScore, rerankScore }: { vectorScore: number, rerankScore: number }) => {
-  const scoreDiff = rerankScore - vectorScore;
-  const isSignificant = scoreDiff > 0.3; // 30% difference threshold
-  
-  let message = "";
-  let color = "text-gray-600";
-  
-  if (isSignificant) {
-    message = "🎯 Reranker strongly confirms this result's relevance despite lower vector similarity";
-    color = "text-green-600";
-  } else if (scoreDiff > 0) {
-    message = "✓ Reranker agrees with vector search on relevance";
-    color = "text-blue-600";
-  } else {
-    message = "⚠️ Reranker found this result less relevant than vector similarity suggested";
-    color = "text-yellow-600";
-  }
-
-  return (
-    <div className="mt-2 p-2 bg-gray-50 rounded">
-      <div className="text-sm">
-        <div className="flex justify-between mb-1">
-          <span>Vector Score:</span>
-          <span>{(vectorScore * 100).toFixed(1)}%</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Rerank Score:</span>
-          <span>{(rerankScore * 100).toFixed(1)}%</span>
-        </div>
-      </div>
-      <p className={`text-xs mt-2 ${color}`}>{message}</p>
-    </div>
-  );
-};
 
 export default function WeaveEvaluator() {
   const [responses, setResponses] = useState<PineconeResponse[]>([])
@@ -468,7 +432,7 @@ export default function WeaveEvaluator() {
                         </p>
                         
                         {Object.entries(evaluation.response.metadata as Metadata)
-                          .filter(([_, value]) => value && value.trim() !== '')
+                          .filter(([, value]) => value && value.trim() !== '')
                           .map(([key, value]) => (
                             <MetadataTooltip key={key} label={key} value={decodeUrlText(value as string)} />
                           ))}
@@ -527,7 +491,7 @@ export default function WeaveEvaluator() {
                         </p>
 
                         {Object.entries(result.metadata as Metadata)
-                          .filter(([_, value]) => value && value.trim() !== '')
+                          .filter(([, value]) => value && value.trim() !== '')
                           .map(([key, value]) => (
                             <MetadataTooltip key={key} label={key} value={decodeUrlText(value as string)} />
                           ))}
