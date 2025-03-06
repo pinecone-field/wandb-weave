@@ -62,15 +62,11 @@ export async function GET(request: Request) {
         queryLatency: queryEndTime - queryStartTime
       }
     })
-  } catch (error: any) {
+  } catch (error) {
     console.error('Pinecone API error:', {
-      message: error.message,
-      cause: error.cause,
-      stack: error.stack
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined
     })
-    return NextResponse.json({ 
-      error: 'Failed to fetch responses',
-      details: error.message
-    }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to fetch responses' }, { status: 500 })
   }
 } 

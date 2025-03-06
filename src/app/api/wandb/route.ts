@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import wandb from '@wandb/sdk'
-import { PineconeResponse, RerankResponse, WandbEvaluation } from '@/types'
+import { PineconeResponse, WandbEvaluation } from '@/types'
 
 // Basic evaluation functions
 const checkRelevance = (query: string, response: any) => {

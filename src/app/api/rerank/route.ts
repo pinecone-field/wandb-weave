@@ -26,9 +26,9 @@ export async function POST(request: Request) {
     const result = await pinecone.inference.rerank(
       rerankingModel,
       query,
-      documents.map((doc: any) => ({
+      documents.map((doc: PineconeResponse) => ({
         id: doc.id,
-        text: doc.metadata.text
+        text: doc.metadata.text || ''
       })),
       rerankOptions
     )
@@ -58,8 +58,8 @@ export async function POST(request: Request) {
     })
 
     return NextResponse.json({ reranked })
-  } catch (error: any) {
-    console.error('Reranking error:', error)
+  } catch (error) {
+    console.error('Reranking error:', error instanceof Error ? error.message : 'Unknown error')
     return NextResponse.json({ error: 'Failed to rerank results' }, { status: 500 })
   }
 } 

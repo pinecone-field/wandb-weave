@@ -171,7 +171,7 @@ export default function WeaveEvaluator() {
   const [loading, setLoading] = useState(false)
   const [queryText, setQueryText] = useState("This is an example query.")
   const [selectedModel, setSelectedModel] = useState(COMPATIBLE_MODELS[0])
-  const [rerankedResults, setRerankedResults] = useState<any[]>([])
+  const [rerankedResults, setRerankedResults] = useState<RerankResponse[]>([])
 
   const fetchResponses = async () => {
     console.log('Starting fetchResponses')
