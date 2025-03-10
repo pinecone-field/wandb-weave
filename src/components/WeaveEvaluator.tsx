@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { PineconeResponse, RerankResponse, Metadata } from '@/types'
+import { PineconeResponse, RerankResponse, WeaveEvaluation } from '@/types'
 
 interface QueryDetails {
   vector: string
@@ -9,12 +9,6 @@ interface QueryDetails {
   totalLatency: number
   queryLatency: number
   modelUsed?: string
-}
-
-interface Evaluation {
-  response: PineconeResponse
-  score: number
-  metrics: Record<string, number>
 }
 
 interface EmbeddingModel {
@@ -55,7 +49,7 @@ const truncateText = (text: string, maxLength: number = 50) => {
 
 const decodeUrlText = (text: string): string => {
   try {
-    return decodeURIComponent(text.replace(/\+/g, ' '));
+    return decodeURIComponent(text);
   } catch {
     return text;
   }
@@ -63,6 +57,7 @@ const decodeUrlText = (text: string): string => {
 
 const MetadataTooltip = ({ label, value }: { label: string, value: string }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  // Only decode URLs for ID fields
   const decodedValue = decodeUrlText(value);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -89,83 +84,68 @@ const MetadataTooltip = ({ label, value }: { label: string, value: string }) => 
   );
 };
 
-// Create a shared metrics component
-const MetricsSection = ({ 
-  score, 
-  latency, 
-  avgRelevance, 
-  scoreSpread,
-  evaluationScore 
-}: {
-  score: number,
-  latency: number,
-  avgRelevance: number,
-  scoreSpread: number,
-  evaluationScore: number
-}) => (
-  <div className="mt-4 pt-4 border-t">
-    <div className="space-y-4">
+interface MetricsSectionProps {
+  similarity: number;
+  latency: number;
+  rerank_score: number;
+  model_latency: number;
+}
+
+const MetricsSection = ({ similarity, latency, rerank_score, model_latency }: MetricsSectionProps) => (
+  <div className="bg-white p-6 rounded-lg border">
+    <h3 className="text-xl font-semibold mb-4">Performance Metrics</h3>
+    <div className="grid grid-cols-2 gap-6">
       <div>
-        <p className="text-lg font-medium mb-1">
-          Evaluation Score: {evaluationScore.toFixed(4)}
+        <p className="text-sm">
+          <span className="font-medium">Similarity Score:</span>{' '}
+          <span className={similarity > 50 ? 'text-green-600' : 'text-yellow-600'}>
+            {similarity.toFixed(1)}%
+          </span>
         </p>
-        <p className="text-sm text-gray-500">
-          Overall relevance score based on semantic similarity and content matching
+        <p className="text-xs text-gray-500">
+          Direct measure of semantic match with query
         </p>
       </div>
 
-      <div className="space-y-2">
-        <h4 className="text-lg font-medium">Performance Metrics:</h4>
-        <div className="space-y-2">
-          <div>
-            <p className="text-sm">
-              <span className="font-medium">Similarity Score:</span>{' '}
-              <span className={score > 0.5 ? 'text-green-600' : 'text-gray-600'}>
-                {(score * 100).toFixed(1)}%
-              </span>
-            </p>
-            <p className="text-xs text-gray-500">
-              Direct measure of semantic match with query
-            </p>
-          </div>
+      <div>
+        <p className="text-sm">
+          <span className="font-medium">Response Time:</span>{' '}
+          <span className={latency < 200 ? 'text-green-600' : 'text-yellow-600'}>
+            {latency.toFixed(2)}ms
+          </span>
+        </p>
+        <p className="text-xs text-gray-500">
+          ✓ Within performance target
+        </p>
+      </div>
 
-          <div>
-            <p className="text-sm">
-              <span className="font-medium">Response Time:</span>{' '}
-              <span className={latency < 500 ? 'text-green-600' : 'text-yellow-600'}>
-                {latency.toFixed(2)}ms
-              </span>
-            </p>
-            <p className="text-xs text-gray-500">
-              {latency < 500 ? '✓ Within performance target' : '⚠️ Above target latency'}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-sm">
-              <span className="font-medium">Average Relevance:</span>{' '}
-              <span className="text-gray-600">
-                {(avgRelevance * 100).toFixed(1)}%
-              </span>
-            </p>
-            <p className="text-xs text-gray-500">
-              Based on semantic similarity to query
-            </p>
-          </div>
-
-          <div>
-            <p className="text-sm">
-              <span className="font-medium">Result Consistency:</span>{' '}
-              <span className={scoreSpread < 0.3 ? 'text-green-600' : 'text-yellow-600'}>
-                {(scoreSpread * 100).toFixed(1)}% variation
-              </span>
-            </p>
-            <p className="text-xs text-gray-500">
-              Lower variation suggests more consistent relevance
-            </p>
-          </div>
+      {rerank_score > 0 && (
+        <div>
+          <p className="text-sm">
+            <span className="font-medium">Rerank Score:</span>{' '}
+            <span className={rerank_score > 50 ? 'text-green-600' : 'text-yellow-600'}>
+              {rerank_score.toFixed(1)}%
+            </span>
+          </p>
+          <p className="text-xs text-gray-500">
+            Based on semantic similarity to query
+          </p>
         </div>
-      </div>
+      )}
+
+      {model_latency > 0 && (
+        <div>
+          <p className="text-sm">
+            <span className="font-medium">Model Latency:</span>{' '}
+            <span className={model_latency < 100 ? 'text-green-600' : 'text-yellow-600'}>
+              {model_latency.toFixed(2)}ms
+            </span>
+          </p>
+          <p className="text-xs text-gray-500">
+            Time spent in model inference
+          </p>
+        </div>
+      )}
     </div>
   </div>
 );
@@ -173,32 +153,60 @@ const MetricsSection = ({
 export default function WeaveEvaluator() {
   const [responses, setResponses] = useState<PineconeResponse[]>([])
   const [queryDetails, setQueryDetails] = useState<QueryDetails | null>(null)
-  const [evaluations, setEvaluations] = useState<Evaluation[]>([])
   const [loading, setLoading] = useState(false)
   const [queryText, setQueryText] = useState("This is an example query.")
   const [selectedModel, setSelectedModel] = useState(COMPATIBLE_MODELS[0])
   const [rerankedResults, setRerankedResults] = useState<RerankResponse[]>([])
   const [error, setError] = useState<ErrorResponse | null>(null)
+  const [vectorEvaluation, setVectorEvaluation] = useState<WeaveEvaluation | null>(null)
 
-  const fetchResponses = async () => {
-    // Clear all previous results
+  const fetchAndEvaluate = async () => {
     setError(null)
     setResponses([])
     setQueryDetails(null)
-    setEvaluations([])
+    setVectorEvaluation(null)
     setRerankedResults([])
     
     setLoading(true)
     try {
+      // First get vector search results
       const res = await fetch(`/api/pinecone?q=${encodeURIComponent(queryText)}&model=${selectedModel.id}`)
       const data = await res.json()
       
       if ('error' in data) {
         setError(data)
-      } else {
-        setResponses(data.responses)
-        setQueryDetails(data.queryDetails)
+        return
       }
+
+      // Set vector search results
+      setResponses(data.responses)
+      setQueryDetails(data.queryDetails)
+      
+      // Then get reranking results
+      const rerankRes = await fetch('/api/rerank', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: queryText,
+          documents: data.responses
+        })
+      })
+      const rerankData = await rerankRes.json()
+      setRerankedResults(rerankData.reranked)
+      
+      // Finally get evaluation
+      const evalRes = await fetch('/api/wandb', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: queryText,
+          responses: data.responses,
+          rerankedResults: rerankData.reranked
+        })
+      })
+      const evalData = await evalRes.json()
+      setVectorEvaluation(evalData.vector_evaluation)
+
     } catch (error) {
       setError({
         error: 'Request failed',
@@ -208,62 +216,8 @@ export default function WeaveEvaluator() {
     setLoading(false)
   }
 
-  const evaluateResponses = async () => {
-    console.log('Starting evaluateResponses with:', responses)
-    setLoading(true)
-    try {
-      console.log('Posting to /api/wandb')
-      const res = await fetch('/api/wandb', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          responses,
-          rerankedResults,
-          query: queryText
-        })
-      })
-      console.log('W&B response:', res.status)
-      const data = await res.json()
-      console.log('W&B data:', data)
-      
-      // Map vector search evaluations using Weave scores
-      setEvaluations(responses.map(response => ({
-        response,
-        score: response.score,
-        metrics: {
-          latency: response.latency,
-          avg_similarity: data.vector_evaluation?.metrics?.mean_score || 0,
-          score_spread: data.vector_evaluation?.metrics?.std_score || 0
-        }
-      })))
-
-    } catch (error) {
-      console.error('Error evaluating responses:', error)
-    }
-    setLoading(false)
-  }
-
-  const rerankResponses = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('/api/rerank', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: queryText,
-          documents: responses
-        })
-      })
-      const data = await res.json()
-      setRerankedResults(data.reranked)
-    } catch (error) {
-      console.error('Error reranking:', error)
-    }
-    setLoading(false)
-  }
-
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="max-w-2xl mx-auto space-y-4">
         <div className="flex flex-col space-y-2">
           <label htmlFor="model" className="text-sm font-medium text-gray-700">
@@ -291,25 +245,15 @@ export default function WeaveEvaluator() {
           value={queryText}
           onChange={(e) => setQueryText(e.target.value)}
           placeholder="Enter your query here..."
-          className="w-full p-3 border rounded-lg text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[100px]"
+          className="w-full p-3 border rounded-lg text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px] resize-none"
         />
-        <div className="flex gap-4 justify-center">
+        <div className="flex justify-center">
           <button
-            onClick={fetchResponses}
+            onClick={fetchAndEvaluate}
             disabled={loading || !queryText.trim()}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-400"
           >
-            Fetch Responses
-          </button>
-          <button
-            onClick={async () => {
-              await evaluateResponses()
-              await rerankResponses()
-            }}
-            disabled={loading || !responses?.length}
-            className="px-4 py-2 bg-green-600 text-white rounded-lg disabled:bg-gray-400"
-          >
-            Evaluate & Rerank
+            Query and Evaluate
           </button>
         </div>
       </div>
@@ -355,43 +299,65 @@ export default function WeaveEvaluator() {
             <p><span className="font-medium">Vector:</span> {queryDetails.vector}</p>
             <p><span className="font-medium">Model:</span> {queryDetails.modelUsed}</p>
             <p><span className="font-medium">Top K:</span> {queryDetails.topK}</p>
-            <p><span className="font-medium">Total Latency:</span> {queryDetails.totalLatency.toFixed(2)}ms</p>
             <p><span className="font-medium">Query Latency:</span> {queryDetails.queryLatency.toFixed(2)}ms</p>
+            {rerankedResults.length > 0 && (
+              <p><span className="font-medium">Rerank Latency:</span> {rerankedResults[0]?.latency.toFixed(2)}ms</p>
+            )}
+            <p><span className="font-medium">Total Latency:</span> {queryDetails.totalLatency.toFixed(2)}ms</p>
           </div>
         </div>
       )}
 
-      {(evaluations.length > 0 || rerankedResults.length > 0) && (
+      {vectorEvaluation && (
+        <MetricsSection
+          similarity={vectorEvaluation.metrics.similarity}
+          latency={vectorEvaluation.metrics.latency}
+          rerank_score={vectorEvaluation.metrics.rerank_score}
+          model_latency={vectorEvaluation.metrics.model_latency}
+        />
+      )}
+
+      {vectorEvaluation && (
         <div className="p-4 border rounded-lg bg-gray-50">
           <h3 className="text-lg font-medium mb-4">Overall Results Summary</h3>
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Vector Search Summary */}
             <div className="space-y-2">
-              <h4 className="text-sm font-medium text-gray-700">Vector Search Results ({evaluations.length})</h4>
+              <h4 className="text-sm font-medium text-gray-700">
+                Vector Search Results ({responses.length})
+              </h4>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Average Similarity</p>
-                  <p className="text-2xl">{(evaluations.reduce((acc, e) => acc + e.response.score, 0) / evaluations.length * 100).toFixed(1)}%</p>
+                  <p className="text-2xl">
+                    {vectorEvaluation.metrics.similarity.toFixed(1)}%
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-600">Average Latency</p>
-                  <p className="text-2xl">{(evaluations.reduce((acc, e) => acc + e.metrics.latency, 0) / evaluations.length).toFixed(1)}ms</p>
+                  <p className="text-2xl">
+                    {vectorEvaluation.metrics.latency.toFixed(1)}ms
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Reranking Summary */}
             {rerankedResults.length > 0 && (
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-gray-700">Reranked Results ({rerankedResults.length})</h4>
+                <h4 className="text-sm font-medium text-gray-700">
+                  Reranked Results ({rerankedResults.length})
+                </h4>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-gray-600">Average Score</p>
-                    <p className="text-2xl">{(rerankedResults.reduce((acc, r) => acc + r.rerank_score, 0) / rerankedResults.length * 100).toFixed(1)}%</p>
+                    <p className="text-2xl">
+                      {vectorEvaluation.metrics.rerank_score.toFixed(1)}%
+                    </p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-600">Average Latency</p>
-                    <p className="text-2xl">{(rerankedResults.reduce((acc, r) => acc + r.latency, 0) / rerankedResults.length).toFixed(1)}ms</p>
+                    <p className="text-2xl">
+                      {vectorEvaluation.metrics.model_latency.toFixed(1)}ms
+                    </p>
                   </div>
                 </div>
               </div>
@@ -400,118 +366,70 @@ export default function WeaveEvaluator() {
         </div>
       )}
 
-      {evaluations.length > 0 && (
-        <div className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* Vector Search Results */}
-            <div className="bg-white p-6 rounded-lg border">
-              <h3 className="text-xl font-semibold mb-4">Top 3 Vector Search Results</h3>
-              <div className="space-y-4">
-                {evaluations.slice(0, 3).map((evaluation, index) => (
-                  <div key={index} className="p-6 border rounded-lg shadow-sm min-h-[600px] flex flex-col">
-                    <div className="flex-1">
-                      <h3 className="font-medium mb-4">Response {index + 1} of {evaluations.length}</h3>
-                      <div className="text-sm text-gray-600 space-y-2">
-                        <div>
-                          <span className="font-medium">ID:</span>
-                          <p className="break-all text-xs mt-1">{decodeUrlText(evaluation.response?.id || 'N/A')}</p>
-                        </div>
-                        
-                        <div className="space-y-1">
-                          <div className="flex justify-between">
-                            <span className="font-medium">Vector Similarity:</span>
-                            <span>{(evaluation.response?.score * 100).toFixed(1)}%</span>
-                          </div>
-                          <div className="h-6"></div>
-                          <div className="h-6"></div>
-                        </div>
-                        
-                        <p>
-                          <span className="font-medium">Latency:</span>{' '}
-                          {evaluation.response?.latency ? `${evaluation.response.latency.toFixed(2)}ms` : 'N/A'}
-                        </p>
-                        
-                        {Object.entries(evaluation.response.metadata as Metadata)
-                          .filter(([, value]) => value && value.trim() !== '')
-                          .map(([key, value]) => (
-                            <MetadataTooltip key={key} label={key} value={decodeUrlText(value as string)} />
-                          ))}
-                      </div>
-
-                      <MetricsSection
-                        score={evaluation.response.score}
-                        latency={evaluation.metrics.latency}
-                        avgRelevance={evaluation.metrics.avg_similarity}
-                        scoreSpread={evaluation.metrics.score_spread}
-                        evaluationScore={evaluation.score}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Reranked Results */}
-            <div className="bg-white p-6 rounded-lg border">
-              <h3 className="text-xl font-semibold mb-4">Top 3 Reranked Results</h3>
-              <div className="space-y-4">
-                {rerankedResults?.map((result, index) => (
-                  <div key={index} className="p-6 border rounded-lg shadow-sm min-h-[600px] flex flex-col">
-                    <div className="flex-1">
-                      <h3 className="font-medium mb-4">Result {index + 1} of {rerankedResults.length}</h3>
-                      <div className="text-sm text-gray-600 space-y-2">
-                        <div>
-                          <span className="font-medium">ID:</span>
-                          <p className="break-all text-xs mt-1">{decodeUrlText(result.id)}</p>
-                        </div>
-                        
-                        <div className="space-y-1">
-                          <div className="flex justify-between">
-                            <span className="font-medium">Vector Similarity:</span>
-                            <span>{(result.score * 100).toFixed(1)}%</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="font-medium">Rerank Score:</span>
-                            <span>{(result.rerank_score * 100).toFixed(1)}%</span>
-                          </div>
-                          {result.rerank_score > result.score * 1.5 ? (
-                            <div className="h-6 flex items-center">
-                              <p className="text-sm text-amber-600">
-                                ⚠️ Large discrepancy between vector and rerank scores
-                              </p>
-                            </div>
-                          ) : (
-                            <div className="h-6"></div>
-                          )}
-                        </div>
-                        
-                        <p>
-                          <span className="font-medium">Latency:</span>{' '}
-                          {result.latency ? `${result.latency.toFixed(2)}ms` : 'N/A'}
-                        </p>
-
-                        {Object.entries(result.metadata as Metadata)
-                          .filter(([, value]) => value && value.trim() !== '')
-                          .map(([key, value]) => (
-                            <MetadataTooltip key={key} label={key} value={decodeUrlText(value as string)} />
-                          ))}
-
-                        <MetricsSection
-                          score={result.score}
-                          latency={result.latency}
-                          avgRelevance={(result.score + result.rerank_score) / 2}
-                          scoreSpread={result.score_spread}
-                          evaluationScore={result.rerank_score}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+      <div className="grid gap-6 md:grid-cols-2">
+        {responses.length > 0 && (
+          <div className="bg-white p-6 rounded-lg border">
+            <h3 className="text-xl font-semibold mb-4">Top 3 Vector Search Results</h3>
+            <div className="space-y-4">
+              {responses.slice(0, 3).map((response, index) => (
+                <div key={response.id} className="p-4 border rounded-lg">
+                  <p className="text-sm text-gray-500">Response {index + 1} of {responses.length}</p>
+                  <p className="mt-2">
+                    <span className="font-medium">ID:</span> {decodeUrlText(response.id)}
+                  </p>
+                  {vectorEvaluation?.individual_scores && (
+                    <>
+                      <p className="mt-2">
+                        <span className="font-medium">Score:</span> {vectorEvaluation.individual_scores[index].relevance.toFixed(1)}%
+                      </p>
+                      <p className="mt-2">
+                        <span className="font-medium">Latency:</span> {vectorEvaluation.individual_scores[index].latency.toFixed(2)}ms
+                      </p>
+                    </>
+                  )}
+                  {response.metadata && Object.entries(response.metadata).map(([key, value]) => (
+                    value && <MetadataTooltip key={key} label={key} value={value} />
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      )}
+        )}
+
+        {rerankedResults.length > 0 && (
+          <div className="bg-white p-6 rounded-lg border">
+            <h3 className="text-xl font-semibold mb-4">Top 3 Reranked Results</h3>
+            <div className="space-y-4">
+              {rerankedResults.slice(0, 3).map((result, index) => (
+                <div key={result.id} className="p-4 border rounded-lg">
+                  <p className="text-sm text-gray-500">Result {index + 1} of {rerankedResults.length}</p>
+                  <p className="mt-2">
+                    <span className="font-medium">ID:</span> {decodeUrlText(result.id)}
+                  </p>
+                  {vectorEvaluation && (
+                    <>
+                      <div className="mt-2 flex justify-between">
+                        <span>
+                          <span className="font-medium">Vector Score:</span> {(vectorEvaluation.metrics.similarity * 100).toFixed(1)}%
+                        </span>
+                        <span>
+                          <span className="font-medium">Rerank Score:</span> {(vectorEvaluation.metrics.rerank_score * 100).toFixed(1)}%
+                        </span>
+                      </div>
+                      <p className="mt-2">
+                        <span className="font-medium">Latency:</span> {vectorEvaluation.metrics.model_latency.toFixed(2)}ms
+                      </p>
+                    </>
+                  )}
+                  {result.metadata && Object.entries(result.metadata).map(([key, value]) => (
+                    value && <MetadataTooltip key={key} label={key} value={value} />
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 } 

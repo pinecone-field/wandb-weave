@@ -18,13 +18,19 @@ export interface RerankResponse extends PineconeResponse {
   score_spread: number
 }
 
-export interface EvaluationMetrics {
-  mean_score: number
-  std_score: number
-  latency: number
+interface IndividualScore {
+  relevance: number;
+  has_title: boolean;
+  text_length: number;
+  latency: number;
 }
 
-export interface WandbEvaluation {
-  metrics: EvaluationMetrics
-  results: PineconeResponse[]
-} 
+export interface WeaveEvaluation {
+  metrics: {
+    similarity: number;
+    rerank_score: number;
+    latency: number;
+    model_latency: number;
+  };
+  individual_scores?: IndividualScore[];  // Make it optional since it might not exist
+}
