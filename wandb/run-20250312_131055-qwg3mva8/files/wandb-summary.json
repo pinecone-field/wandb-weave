@@ -1,0 +1,1 @@
+{"rerank_diversity":0.7,"_wandb":{"runtime":15},"_step":0,"query":"What is NIMs?","rerank_coverage":0.3,"_runtime":15.162691,"vector_diversity":0.3,"rerank_relevance":0.2,"vector_relevance":0,"_timestamp":1.741810270653735e+09,"vector_coverage":0}

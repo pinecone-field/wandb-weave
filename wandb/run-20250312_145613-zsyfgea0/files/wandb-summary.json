@@ -1,0 +1,1 @@
+{"_timestamp":1.7418165970246909e+09,"_step":0,"vector_diversity":0.75,"rerank_diversity":0.7,"rerank_coverage":0.8,"query":"How does CUDA help cybersecurity?","_wandb":{"runtime":23},"vector_coverage":0.85,"rerank_relevance":0.9,"_runtime":23.534755,"vector_relevance":0.9}

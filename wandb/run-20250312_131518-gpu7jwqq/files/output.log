@@ -1,0 +1,99 @@
+INFO:__main__:Query: What is sovereign AI?
+INFO:__main__:Formatted results: Result 1:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 2:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 3:
+Sovereign AI in Telecommunications
+Telecom companies are increasingly playing the role of deploying sovereign AI factories for local governments, enterprises, startups, researchers and students to build generative AI applications.  Attend the following sessions to learn how telcos are enabling countries to invest in and manage complex AI infrastructure platforms:
+
+Accelerating Sovereign AI Factories: Insights from Telco Case Studies: A panel discussion exploring how SoftBank, Telus and Telenor a...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What is sovereign AI?
+
+Results to evaluate:
+Result 1:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 2:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 3:
+Sovereign AI in Telecommunications
+Telecom companies are increasingly playing the role of deploying sovereign AI factories for local governments, enterprises, startups, researchers and students to build generative AI applications.  Attend the following sessions to learn how telcos are enabling countries to invest in and manage complex AI infrastructure platforms:
+
+Accelerating Sovereign AI Factories: Insights from Telco Case Studies: A panel discussion exploring how SoftBank, Telus and Telenor a...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Vector evaluation result: {"relevance": 0.33, "diversity": 0.33, "coverage": 0.33, "explanations": {"relevance": "Only Result 3 directly discusses sovereign AI in context, by mentioning its use in telecommunications. Result 1 and Result 2 are simply identical invitations to subscribe to an AI Podcast with no specific mention of sovereign AI, making them not relevant.", "diversity": "Result 1 and Result 2 are duplicates, so diversity is low. Result 3 offers a different aspect by mentioning the application of sovereign AI in telecommunications, but overall, the diversity is limited due to the duplication of the first two results.", "coverage": "Coverage is limited because only one result (Result 3) is somewhat related to the query about sovereign AI. However, the type of conversation or content from the panel discussion alluded to in Result 3 might not fully explain what sovereign AI is. More varied content, such as definitions, examples across industries, ethical considerations, and future implications, would provide better coverage."}}
+INFO:__main__:Query: What is sovereign AI?
+INFO:__main__:Formatted results: Result 1:
+Around the world, sovereign AI is enabling countries to build and deploy artificial intelligence capabilities on their own.
+This strategic initiative encompasses both physical and data infrastructures, with the latter including sovereign foundation models, such as large language models (LLMs) trained on datasets with a country’s local language, culture and history.
+These efforts often take place through public and private partnerships.  For example, a government might collaborate with local te...
+Result 2:
+Sovereign AI in Telecommunications
+Telecom companies are increasingly playing the role of deploying sovereign AI factories for local governments, enterprises, startups, researchers and students to build generative AI applications.  Attend the following sessions to learn how telcos are enabling countries to invest in and manage complex AI infrastructure platforms:
+
+Accelerating Sovereign AI Factories: Insights from Telco Case Studies: A panel discussion exploring how SoftBank, Telus and Telenor a...
+Result 3:
+The summit features three sessions:
+
+Government Approaches to Advancing Sovereign AI: In this panel discussion, policymakers and government technology leaders from the U. K. , Denmark, India and Japan will share how they’re driving their national AI agenda forward.
+Empower the Ecosystem With Sovereign Foundation Models: This discussion will cover how LLM builders are designing models that incorporate and reflect the language, culture and unique nuances of their nation.  Naver Cloud, iGenius, Si...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What is sovereign AI?
+
+Results to evaluate:
+Result 1:
+Around the world, sovereign AI is enabling countries to build and deploy artificial intelligence capabilities on their own.
+This strategic initiative encompasses both physical and data infrastructures, with the latter including sovereign foundation models, such as large language models (LLMs) trained on datasets with a country’s local language, culture and history.
+These efforts often take place through public and private partnerships.  For example, a government might collaborate with local te...
+Result 2:
+Sovereign AI in Telecommunications
+Telecom companies are increasingly playing the role of deploying sovereign AI factories for local governments, enterprises, startups, researchers and students to build generative AI applications.  Attend the following sessions to learn how telcos are enabling countries to invest in and manage complex AI infrastructure platforms:
+
+Accelerating Sovereign AI Factories: Insights from Telco Case Studies: A panel discussion exploring how SoftBank, Telus and Telenor a...
+Result 3:
+The summit features three sessions:
+
+Government Approaches to Advancing Sovereign AI: In this panel discussion, policymakers and government technology leaders from the U. K. , Denmark, India and Japan will share how they’re driving their national AI agenda forward.
+Empower the Ecosystem With Sovereign Foundation Models: This discussion will cover how LLM builders are designing models that incorporate and reflect the language, culture and unique nuances of their nation.  Naver Cloud, iGenius, Si...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

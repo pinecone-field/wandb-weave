@@ -1,0 +1,7 @@
+INFO:__main__:Query: This is an example query.
+INFO:__main__:Evaluating 10 results
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Vector evaluation result: {"relevance": 0, "diversity": 0.9, "coverage": 0, "explanations": {"relevance": "The provided search results are not relevant to the query 'This is an example query' because it is a placeholder text. Placeholder text does not contain specific informational content or context to match against, so no result accurately answers the query.", "diversity": "The diversity among the results is relatively high. Results present a variety of topics including AI in podcasting, wildlife conservation, retail, automotive AI, scientific research, gaming, AI data centers, and AI in film denoising. The only redundancy is between Result 1 and Result 2, which appear to be duplicates.", "coverage": "Since the query is a generic placeholder and does not convey a specific topic or information need, all search results fail to cover the aspects of the query. Therefore, coverage is rated as 0 because there are no aspects presented in the query that the results could potentially cover."}}
+INFO:__main__:Query: This is an example query.
+INFO:__main__:Evaluating 3 results
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

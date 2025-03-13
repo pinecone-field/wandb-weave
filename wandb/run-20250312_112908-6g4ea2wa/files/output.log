@@ -1,0 +1,103 @@
+INFO:__main__:Query: This is an example query.
+INFO:__main__:Formatted results: Result 1:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 2:
+You Might Also Like… 
+Firsthand’s Jon Heller Shares How AI Agents Enhance Consumer Journeys in Retail
+Learn how AI agents are transforming the retail landscape by personalizing customer journeys, converting marketing interactions into valuable research data and enhancing the customer experience with hyper-personalized insights and recommendations.
+Snowflake’s Baris Gultekin on Unlocking the Value of Data With Large Language Models
+See how Snowflake’s AI Data Cloud platform helps enterprises unl...
+Result 3:
+And in other scientific fields, Evo 2 could be applied to design biofuels or engineer proteins that break down oil or plastic.
+“Deploying a model like Evo 2 is like sending a powerful new telescope out to the farthest reaches of the universe,” said Dave Burke, Arc’s chief technology officer.  “We know there’s immense opportunity for exploration, but we don’t yet know what we’re going to discover. ”
+Read more about Evo 2 on the NVIDIA Technical Blog and in Arc’s technical report.
+See notice reg...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: This is an example query.
+
+Results to evaluate:
+Result 1:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 2:
+You Might Also Like… 
+Firsthand’s Jon Heller Shares How AI Agents Enhance Consumer Journeys in Retail
+Learn how AI agents are transforming the retail landscape by personalizing customer journeys, converting marketing interactions into valuable research data and enhancing the customer experience with hyper-personalized insights and recommendations.
+Snowflake’s Baris Gultekin on Unlocking the Value of Data With Large Language Models
+See how Snowflake’s AI Data Cloud platform helps enterprises unl...
+Result 3:
+And in other scientific fields, Evo 2 could be applied to design biofuels or engineer proteins that break down oil or plastic.
+“Deploying a model like Evo 2 is like sending a powerful new telescope out to the farthest reaches of the universe,” said Dave Burke, Arc’s chief technology officer.  “We know there’s immense opportunity for exploration, but we don’t yet know what we’re going to discover. ”
+Read more about Evo 2 on the NVIDIA Technical Blog and in Arc’s technical report.
+See notice reg...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Vector evaluation result: {"relevance": 0.0, "diversity": 0.67, "coverage": 0.0, "explanations": {"relevance": "The results do not answer the query because 'This is an example query' does not specify a topic or context to be relevant to. The provided results pertain to AI podcasts, retail AI, and scientific use of AI, which do not connect to any specific topic implied in the query.", "diversity": "The results are diverse addressing three different topics: AI Podcasts, AI in retail, and scientific uses of AI models. They provide non-redundant content from the perspective of AI applications in various sectors.", "coverage": "The results do not cover different aspects of the query because the query does not contain any specific information or subject matter to be covered."}}
+INFO:__main__:Query: This is an example query.
+INFO:__main__:Formatted results: Result 1:
+Instead of traditional AI models that rapidly generate a one-shot answer to a user prompt, models using this technique allocate extra computational effort during inference, allowing them to reason through multiple potential responses before arriving at the best answer.
+On tasks like generating complex, customized code for developers, this AI reasoning process can take multiple minutes, or even hours — and can easily require over 100x compute for challenging queries compared to a single inferenc...
+Result 2:
+mp4
+In this extreme example of four samples average per pixel, Disney’s ML Denoiser does a remarkable job.  Inside Out 2 © Disney/Pixar 
+Applying U-Nets to Denoising
+Timo Aila received a Technical Achievement Award, alongside Attila T.  Áfra, for his pioneering contributions to AI image denoising.  Aila led the early development of the U-Net architecture, which has proven able to remove noise while preserving fine details, and has become a vital technique across the film industry.  Áfra implemen...
+Result 3:
+Its release has been called the iPhone moment for AI because it helped so many people see how they could use the technology.
+One timeline describes the path from early AI research to ChatGPT.  (Source: blog. bytebytego. com)
+Going Multimodal
+Foundation models have also expanded to process and generate multiple data types, or modalities, such as text, images, audio and video.  VLMs are one type of multimodal models that can understand video, image and text inputs while producing text or visual o...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: This is an example query.
+
+Results to evaluate:
+Result 1:
+Instead of traditional AI models that rapidly generate a one-shot answer to a user prompt, models using this technique allocate extra computational effort during inference, allowing them to reason through multiple potential responses before arriving at the best answer.
+On tasks like generating complex, customized code for developers, this AI reasoning process can take multiple minutes, or even hours — and can easily require over 100x compute for challenging queries compared to a single inferenc...
+Result 2:
+mp4
+In this extreme example of four samples average per pixel, Disney’s ML Denoiser does a remarkable job.  Inside Out 2 © Disney/Pixar 
+Applying U-Nets to Denoising
+Timo Aila received a Technical Achievement Award, alongside Attila T.  Áfra, for his pioneering contributions to AI image denoising.  Aila led the early development of the U-Net architecture, which has proven able to remove noise while preserving fine details, and has become a vital technique across the film industry.  Áfra implemen...
+Result 3:
+Its release has been called the iPhone moment for AI because it helped so many people see how they could use the technology.
+One timeline describes the path from early AI research to ChatGPT.  (Source: blog. bytebytego. com)
+Going Multimodal
+Foundation models have also expanded to process and generate multiple data types, or modalities, such as text, images, audio and video.  VLMs are one type of multimodal models that can understand video, image and text inputs while producing text or visual o...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

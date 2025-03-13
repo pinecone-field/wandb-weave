@@ -1,0 +1,116 @@
+INFO:__main__:=== Starting Weave Evaluation ===
+INFO:__main__:Request payload: {"query":"What is NVIDIA working on now?","vector_results":[{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fnvidia-life-malcolm-gutenburg%2F#3","score":0.281679899,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/nvidia-life-malcolm-gutenburg/","text":"The “one team” mindset that everyone shared sped the rate of innovation and helped spread key lessons and takeaways across numerous areas of the business. \n“Our positive attitude toward innovation sets us apart,” Gutenburg said.  “A lot of the ideas we use today began as crazy ideas that didn’t get shot down — you just never know the worth of an idea until you try it. ”\nThe pursuit of new frontiers that can drive the constant evolution of NVIDIA’s technology is what motivates him every day. \n“My life’s work is to create world-changing products that I thought were impossible,” he said.  “The word ‘impossible’ is invigorating to me and everyone at NVIDIA. ”\nLearn more about NVIDIA life, culture and careers.","title":"How an NVIDIA Thermal Engineer Turns Up the Heat on Product Innovation"},"latency":99.13170800008811},{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fopenusd-synthetic-data-for-humanoid-robots%2F#5","score":0.270393282,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/openusd-synthetic-data-for-humanoid-robots/","text":"Learn how to use USD and continue to optimize 3D workflows with the new self-paced “Learn OpenUSD” curriculum for 3D developers and practitioners, available for free through the NVIDIA Deep Learning Institute.  For more resources on OpenUSD, explore the Alliance for OpenUSD forum and the AOUSD website. \nStay up to date by subscribing to NVIDIA news, joining the community and following NVIDIA Omniverse on Instagram, LinkedIn, Medium and X. \nFeatured image courtesy of Fourier.","title":"Into the Omniverse: How OpenUSD and Synthetic Data Are Shaping the Future for Humanoid Robots"},"latency":99.13170800008811},{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fnvidia-life-malcolm-gutenburg%2F#2","score":0.257912666,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/nvidia-life-malcolm-gutenburg/","text":"Gutenburg was especially drawn to NVIDIA’s open culture.  He appreciated how, instead of dwelling on reasons why an idea can’t be pursued, employees are encouraged to discover ways to make it a reality. \n“Executing on ideas that improve thermal performance cannot be done alone and is made possible by the work done by all the other engineering disciplines,” he said.  “It can take years of work to fully realize these ideas, but the results can be incredible. ”\n\nGutenburg loves to work with physical products that he can take apart, test — and sometimes slice in half.  He finds it rewarding to be part of a team that works together to create cutting-edge products that help solve difficult problems and deliver enjoyable user experiences. \nHis proudest achievement is working with multiple teams on the launch of the NVIDIA RTX 5090 GPU, the company’s newest flagship gaming processor.","title":"How an NVIDIA Thermal Engineer Turns Up the Heat on Product Innovation"},"latency":99.13170800008811},{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fnvidia-life-malcolm-gutenburg%2F#1","score":0.24152942,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/nvidia-life-malcolm-gutenburg/","text":"Their work helps minimize the amount of energy used on cooling, increasing how much computing power a GPU delivers per watt of energy used. \n“There’s no better place for thermal engineering than NVIDIA,” he said.  “Our products constantly require innovation to keep increasing their capabilities and efficiency. ”\n\nNVIDIA has advanced performance per watt to the point where NVIDIA Blackwell offers the computational power of the Titan supercomputer launched 10 years ago — a $100 million system the size of a tennis court — while being efficient enough to be powered by a wall socket just like a typical home appliance. \nAt the University of Toronto, where he earned his bachelor’s degree in chemical e
+INFO:__main__:Query: What is NVIDIA working on now?
+INFO:__main__:Vector results: [{"id": "https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fnvidia-life-malcolm-gutenburg%2F#3", "score": 0.281679899, "metadata": {"date": "", "source": "https://blogs.nvidia.com/blog/nvidia-life-malcolm-gutenburg/", "text": "The \u201cone team\u201d mindset that everyone shared sped the rate of innovation and helped spread key lessons and takeaways across numerous areas of the business. \n\u201cOur positive attitude toward innovation sets us apart,\u201d Gutenburg said.  \u201cA lot of the ideas we use today began as crazy ideas that didn\u2019t get shot down \u2014 you just never know the worth of an idea until you try it. \u201d\nThe pursuit of new frontiers that can drive the constant evolution of NVIDIA\u2019s technology is what motivates him every day. \n\u201cMy life\u2019s work is to create world-changing products that I thought were impossible,\u201d he said.  \u201cThe word \u2018impossible\u2019 is invigorating to me and everyone at NVIDIA. \u201d\nLearn more about NVIDIA life, culture and careers.", "title": "How an NVIDIA Thermal Engineer Turns Up the Heat on Product Innovation"}, "latency": 99.13170800008811}]...
+INFO:__main__:Reranked results count: 3
+INFO:__main__:Starting vector evaluation with GPT-4...
+INFO:__main__:Query: What is NVIDIA working on now?
+INFO:__main__:Formatted results: Result 1:
+The “one team” mindset that everyone shared sped the rate of innovation and helped spread key lessons and takeaways across numerous areas of the business.
+“Our positive attitude toward innovation sets us apart,” Gutenburg said.  “A lot of the ideas we use today began as crazy ideas that didn’t get shot down — you just never know the worth of an idea until you try it. ”
+The pursuit of new frontiers that can drive the constant evolution of NVIDIA’s technology is what motivates him every day.
+“My...
+Result 2:
+Learn how to use USD and continue to optimize 3D workflows with the new self-paced “Learn OpenUSD” curriculum for 3D developers and practitioners, available for free through the NVIDIA Deep Learning Institute.  For more resources on OpenUSD, explore the Alliance for OpenUSD forum and the AOUSD website.
+Stay up to date by subscribing to NVIDIA news, joining the community and following NVIDIA Omniverse on Instagram, LinkedIn, Medium and X.
+Featured image courtesy of Fourier....
+Result 3:
+Gutenburg was especially drawn to NVIDIA’s open culture.  He appreciated how, instead of dwelling on reasons why an idea can’t be pursued, employees are encouraged to discover ways to make it a reality.
+“Executing on ideas that improve thermal performance cannot be done alone and is made possible by the work done by all the other engineering disciplines,” he said.  “It can take years of work to fully realize these ideas, but the results can be incredible. ”
+
+Gutenburg loves to work with physica...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What is NVIDIA working on now?
+
+Results to evaluate:
+Result 1:
+The “one team” mindset that everyone shared sped the rate of innovation and helped spread key lessons and takeaways across numerous areas of the business.
+“Our positive attitude toward innovation sets us apart,” Gutenburg said.  “A lot of the ideas we use today began as crazy ideas that didn’t get shot down — you just never know the worth of an idea until you try it. ”
+The pursuit of new frontiers that can drive the constant evolution of NVIDIA’s technology is what motivates him every day.
+“My...
+Result 2:
+Learn how to use USD and continue to optimize 3D workflows with the new self-paced “Learn OpenUSD” curriculum for 3D developers and practitioners, available for free through the NVIDIA Deep Learning Institute.  For more resources on OpenUSD, explore the Alliance for OpenUSD forum and the AOUSD website.
+Stay up to date by subscribing to NVIDIA news, joining the community and following NVIDIA Omniverse on Instagram, LinkedIn, Medium and X.
+Featured image courtesy of Fourier....
+Result 3:
+Gutenburg was especially drawn to NVIDIA’s open culture.  He appreciated how, instead of dwelling on reasons why an idea can’t be pursued, employees are encouraged to discover ways to make it a reality.
+“Executing on ideas that improve thermal performance cannot be done alone and is made possible by the work done by all the other engineering disciplines,” he said.  “It can take years of work to fully realize these ideas, but the results can be incredible. ”
+
+Gutenburg loves to work with physica...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Vector evaluation result: {"relevance": 0.5, "diversity": 0.7, "coverage": 0.5, "explanations": {"relevance": "Result 1 and Result 3 mention NVIDIA's innovation and work culture but do not provide specific information on current projects or developments. Result 2 touches on current educational resources provided by NVIDIA but lacks information on actual NVIDIA projects. None of the results give a direct answer to the query regarding what NVIDIA is specifically working on now.", "diversity": "While all results are about NVIDIA, they focus on different aspects: Result 1 speaks broadly about innovation culture, Result 2 discusses educational resources for developers, and Result 3 touches on engineering and teamwork. The topics are related but distinguishable.", "coverage": "None of the results comprehensively cover NVIDIA's current projects or specific areas of focus. While they do include innovation culture, educational resources, and teamwork, they miss out on explicitly naming current products, services, and research areas NVIDIA might be working on."}}
+INFO:__main__:Starting rerank evaluation with GPT-4...
+INFO:__main__:Query: What is NVIDIA working on now?
+INFO:__main__:Formatted results: Result 1:
+Their work helps minimize the amount of energy used on cooling, increasing how much computing power a GPU delivers per watt of energy used.
+“There’s no better place for thermal engineering than NVIDIA,” he said.  “Our products constantly require innovation to keep increasing their capabilities and efficiency. ”
+
+NVIDIA has advanced performance per watt to the point where NVIDIA Blackwell offers the computational power of the Titan supercomputer launched 10 years ago — a $100 million system the ...
+Result 2:
+Bringing NVIDIA AI and accelerated computing to the forefront of OT security can help organizations protect what matters most — now and in the future.
+Learn more by attending the NVIDIA GTC global AI conference, running March 17-21, where Armis, Check Point and CrowdStrike  cybersecurity leaders will host sessions about their collaborations with NVIDIA....
+Result 3:
+“Given that future AI systems will likely rely heavily on foundation models, it is imperative that we, as a community, come together to develop more rigorous principles for foundation models and guidance for their responsible development and deployment,” said the Stanford paper on foundation models.
+Current ideas for safeguards include filtering prompts and their outputs, recalibrating models on the fly and scrubbing massive datasets.
+“These are issues we’re working on as a research community,...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What is NVIDIA working on now?
+
+Results to evaluate:
+Result 1:
+Their work helps minimize the amount of energy used on cooling, increasing how much computing power a GPU delivers per watt of energy used.
+“There’s no better place for thermal engineering than NVIDIA,” he said.  “Our products constantly require innovation to keep increasing their capabilities and efficiency. ”
+
+NVIDIA has advanced performance per watt to the point where NVIDIA Blackwell offers the computational power of the Titan supercomputer launched 10 years ago — a $100 million system the ...
+Result 2:
+Bringing NVIDIA AI and accelerated computing to the forefront of OT security can help organizations protect what matters most — now and in the future.
+Learn more by attending the NVIDIA GTC global AI conference, running March 17-21, where Armis, Check Point and CrowdStrike  cybersecurity leaders will host sessions about their collaborations with NVIDIA....
+Result 3:
+“Given that future AI systems will likely rely heavily on foundation models, it is imperative that we, as a community, come together to develop more rigorous principles for foundation models and guidance for their responsible development and deployment,” said the Stanford paper on foundation models.
+Current ideas for safeguards include filtering prompts and their outputs, recalibrating models on the fly and scrubbing massive datasets.
+“These are issues we’re working on as a research community,...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Rerank evaluation result: {"relevance": 0.9, "diversity": 0.8, "coverage": 0.9, "explanations": {"relevance": "All results are closely related to current NVIDIA projects or areas of interest. Result 1 discusses advancements in NVIDIA's thermal engineering and GPU efficiency, directly related to current hardware work. Result 2 relates to cybersecurity and the use of NVIDIA's AI and computing technology in that field, showcasing ongoing collaborations. Result 3 mentions foundational models in AI, a prominent research area, and potentially ties back to NVIDIA's AI work, even if NVIDIA is not directly mentioned.", "diversity": "The results are relatively diverse, covering three different areas: energy efficiency and hardware advancements (Result 1), cybersecurity applications (Result 2), and principles for AI foundation models (Result 3). Although Result 3 is less clearly tied to NVIDIA's direct involvement, the topic is relevant to NVIDIA's interests in AI.", "coverage": "The results cover a broad scope of NVIDIA's current pursuits, including hardware, software, AI research, and security. To fully address the query, we have information on technical innovation, industry applications, and collaborative efforts in the field of AI which gives a well-rounded picture of NVIDIA's activities."}}
+INFO:__main__:Logging to W&B...
+ERROR:__main__:W&B logging failed: 'vector'
+Traceback (most recent call last):
+  File "/Users/cory/dev/pinecone-field/wandb-weave/cgi-bin/app.py", line 229, in evaluate
+    "vector_relevance": vector_eval["vector"]["ndcg"],
+                        ~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'vector'

@@ -1,0 +1,17 @@
+{"time":"2025-03-13T09:47:42.784911-07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/Users/cory/dev/pinecone-field/wandb-weave/wandb/run-20250313_094742-naoo7u78/logs/debug-core.log"}
+{"time":"2025-03-13T09:47:42.785397-07:00","level":"INFO","msg":"created new stream","id":"naoo7u78"}
+{"time":"2025-03-13T09:47:42.785426-07:00","level":"INFO","msg":"stream: started","id":"naoo7u78"}
+{"time":"2025-03-13T09:47:42.785462-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"naoo7u78"}
+{"time":"2025-03-13T09:47:42.785474-07:00","level":"INFO","msg":"handler: started","stream_id":"naoo7u78"}
+{"time":"2025-03-13T09:47:42.785512-07:00","level":"INFO","msg":"sender: started","stream_id":"naoo7u78"}
+{"time":"2025-03-13T09:47:42.922697-07:00","level":"ERROR","msg":"HTTP error","status":403,"method":"POST","url":"https://api.wandb.ai/graphql"}
+{"time":"2025-03-13T09:47:42.922835-07:00","level":"ERROR","msg":"sender: upsertRun:","error":"failed to upsert bucket: returned error 403: {\"data\":{\"upsertBucket\":null},\"errors\":[{\"message\":\"permission denied\",\"path\":[\"upsertBucket\"],\"extensions\":{\"code\":\"PERMISSION_ERROR\"}}]}"}
+{"time":"2025-03-13T09:48:27.084138-07:00","level":"INFO","msg":"stream: closing","id":"naoo7u78"}
+{"time":"2025-03-13T09:48:27.085269-07:00","level":"ERROR","msg":"sender: upsertConfig: RunRecord is nil"}
+{"time":"2025-03-13T09:48:27.194476-07:00","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/graphql"}
+{"time":"2025-03-13T09:48:27.194577-07:00","level":"ERROR","msg":"runfiles: CreateRunFiles returned error: returned error 404: {\"data\":{\"createRunFiles\":null},\"errors\":[{\"message\":\"project cory-pinecone/weave-pinecone not found during createRunFiles\",\"path\":[\"createRunFiles\"]}]}"}
+{"time":"2025-03-13T09:48:27.194977-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-13T09:48:27.195015-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"naoo7u78"}
+{"time":"2025-03-13T09:48:27.195018-07:00","level":"INFO","msg":"handler: closed","stream_id":"naoo7u78"}
+{"time":"2025-03-13T09:48:27.195028-07:00","level":"INFO","msg":"sender: closed","stream_id":"naoo7u78"}
+{"time":"2025-03-13T09:48:27.195091-07:00","level":"INFO","msg":"stream: closed","id":"naoo7u78"}

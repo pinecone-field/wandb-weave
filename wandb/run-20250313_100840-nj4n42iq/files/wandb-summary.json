@@ -1,0 +1,1 @@
+{"rerank_coverage":0.6,"rerank_diversity":0.5,"_runtime":25.772413,"_step":0,"_wandb":{"runtime":25},"vector_coverage":0.2,"rerank_relevance":0.7,"query":"What is CUDA?","vector_diversity":0.6,"vector_relevance":0.1,"_timestamp":1.741885746672666e+09}

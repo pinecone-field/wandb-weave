@@ -10,6 +10,17 @@ import numpy as np
 from sentence_transformers import CrossEncoder
 from openai import AsyncOpenAI
 import json
+import wandb
+from datetime import datetime
+from dotenv import load_dotenv
+from pathlib import Path
+
+# Get path to .env.local in project root
+root_dir = Path(__file__).parent.parent
+env_path = root_dir / '.env.local'
+
+# Load .env.local specifically
+load_dotenv(dotenv_path=env_path)
 
 app = FastAPI()
 logging.basicConfig(level=logging.INFO)
@@ -20,7 +31,7 @@ class WeaveRequest(BaseModel):
     vector_results: List[Dict]
     reranked_results: List[Dict] = []
     model_name: str
-    index_name: str = "pinecone-docs"
+    index_name: str = os.getenv("PINECONE_INDEX_NAME")
     top_k: int = Field(default=10)
     rerank_model: str = Field(default="cross-encoder/ms-marco-MiniLM-L-6-v2")
 
@@ -102,7 +113,8 @@ def evaluate_search(model_output: Dict) -> Dict:
 class SearchEvaluator:
     def __init__(self):
         self.client = AsyncOpenAI()
-        self.eval_prompt = """You are evaluating search results for relevance and diversity.
+        # Use raw string to avoid any escape sequence issues
+        self.eval_prompt = r"""You are evaluating search results for relevance and diversity.
 
 Query: {query}
 
@@ -115,115 +127,161 @@ Please evaluate these results on:
 3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
 
 Return a JSON object with this exact structure:
-{
+{{
   "relevance": <float 0-1>,
   "diversity": <float 0-1>,
   "coverage": <float 0-1>,
-  "explanations": {
+  "explanations": {{
     "relevance": "<explanation>",
     "diversity": "<explanation>",
     "coverage": "<explanation>"
-  }
-}
-"""
+  }}
+}}"""
 
     async def evaluate_results(self, query: str, results: List[Dict]) -> Dict:
-        formatted_results = "\n".join([
-            f"Result {i+1}:\n{r['metadata'].get('text', '')[:500]}..."  
-            for i, r in enumerate(results[:3])
-        ])
+        try:
+            formatted_results = "\n".join([
+                f"Result {i+1}:\n{r['metadata'].get('text', '')[:500]}..."  
+                for i, r in enumerate(results)
+            ])
+            
+            logger.info(f"Query: {query}")
+            logger.info(f"Evaluating {len(results)} results")
+            
+            prompt = self.eval_prompt.format(
+                query=query,
+                results=formatted_results
+            )
 
-        response = await self.client.chat.completions.create(
-            model="gpt-4-1106-preview",
-            messages=[{
-                "role": "user",
-                "content": self.eval_prompt.format(
-                    query=query,
-                    results=formatted_results
-                )
-            }],
-            response_format={ "type": "json_object" }
-        )
+            response = await self.client.chat.completions.create(
+                model="gpt-4-1106-preview",
+                messages=[{
+                    "role": "user",
+                    "content": prompt
+                }],
+                response_format={ "type": "json_object" }
+            )
 
-        return json.loads(response.choices[0].message.content)
+            return json.loads(response.choices[0].message.content)
+        except Exception as e:
+            logger.error(f"Evaluation error: {str(e)}", exc_info=True)
+            raise
+
+def get_run_name(query: str, model_name: str) -> str:
+    # Clean the query - remove special chars and spaces
+    clean_query = "".join(c for c in query if c.isalnum() or c.isspace()).strip()
+    # Truncate query to fit within limit, leaving room for timestamp and model name
+    max_query_length = 80  # 128 - (len("2024-03-12-13:15:18") + len("-pinecone-docs-") + buffer)
+    truncated_query = clean_query[:max_query_length] + ("..." if len(clean_query) > max_query_length else "")
+    timestamp = datetime.now().strftime('%Y-%m-%d-%H:%M:%S')
+    return f"{truncated_query}-{model_name}-{timestamp}"
 
 @app.post("/cgi-bin/weave")
 async def evaluate(request: WeaveRequest):
-    logger.info("=== Starting Weave Evaluation ===")
-    logger.info(f"Request payload: {request.model_dump_json()}")
-
+    run = None
     try:
-        evaluator = SearchEvaluator()
+        run_name = get_run_name(request.query, request.model_name)
         
-        # Validate input
-        if not request.vector_results:
-            logger.error("No vector results provided")
-            raise HTTPException(
-                status_code=422,
-                detail="No vector search results provided for evaluation"
-            )
-
-        logger.info(f"Query: {request.query}")
-        logger.info(f"Vector results: {json.dumps(request.vector_results[:1])}...")  # First result only
-        logger.info(f"Reranked results count: {len(request.reranked_results)}")
-
+        (entity, project) = (os.getenv("WANDB_ENTITY"), os.getenv("WEAVE_PROJECT"))
+        logger.info(f"Initializing W&B run with: entity={entity}, project={project}")
+        
+        # Initialize W&B with error handling
         try:
-            logger.info("Starting vector evaluation with GPT-4...")
-            vector_eval = await evaluator.evaluate_results(
-                request.query, 
-                request.vector_results
+            run = wandb.init(
+                entity=entity,
+                project=project,
+                name=run_name,
+                reinit=True,
+                settings=wandb.Settings(
+                    start_method="thread",
+                    _disable_stats=True
+                ),
+                config={
+                    "model": request.model_name,
+                    "index": request.index_name,
+                    "top_k": request.top_k,
+                    "rerank_model": request.rerank_model
+                }
             )
-            logger.info(f"Vector evaluation result: {json.dumps(vector_eval)}")
+            logger.info(f"W&B run initialized successfully: {run.name}")
         except Exception as e:
-            logger.error(f"Vector evaluation failed: {str(e)}", exc_info=True)
+            logger.error(f"W&B initialization failed: {str(e)}", exc_info=True)
+            logger.debug(f"W&B parameters: entity='{entity}', project='{project}', name='{run_name}'")
             raise HTTPException(
                 status_code=500,
-                detail=f"Vector evaluation failed: {str(e)}"
+                detail=f"W&B initialization failed: {str(e)}"
             )
+
+        evaluator = SearchEvaluator()
+        
+        # Get evaluations
+        vector_eval = await evaluator.evaluate_results(
+            request.query, 
+            request.vector_results
+        )
+        logger.info(f"Vector evaluation result: {json.dumps(vector_eval)}")
 
         rerank_eval = None
         if request.reranked_results:
-            try:
-                logger.info("Starting rerank evaluation with GPT-4...")
-                rerank_eval = await evaluator.evaluate_results(
-                    request.query,
-                    request.reranked_results
-                )
-                logger.info(f"Rerank evaluation result: {json.dumps(rerank_eval)}")
-            except Exception as e:
-                logger.error(f"Rerank evaluation failed: {str(e)}", exc_info=True)
-                rerank_eval = None
+            rerank_eval = await evaluator.evaluate_results(
+                request.query,
+                request.reranked_results
+            )
 
+        # Log to W&B with error handling
         try:
-            logger.info("Logging to W&B...")
-            log_data = {
+            wandb.log({
                 "query": request.query,
-                "vector_evaluation": vector_eval,
-                "rerank_evaluation": rerank_eval,
-                "vector_results": request.vector_results,
-                "reranked_results": request.reranked_results
-            }
-            logger.info(f"W&B log data: {json.dumps(log_data)}")
-            weave.log(log_data)
-            logger.info("Successfully logged to W&B")
+                "vector_relevance": vector_eval["relevance"],
+                "vector_diversity": vector_eval["diversity"],
+                "vector_coverage": vector_eval["coverage"],
+                "rerank_relevance": rerank_eval["relevance"] if rerank_eval else None,
+                "rerank_diversity": rerank_eval["diversity"] if rerank_eval else None,
+                "rerank_coverage": rerank_eval["coverage"] if rerank_eval else None,
+            })
+            logger.info("Successfully logged metrics to W&B")
         except Exception as e:
             logger.error(f"W&B logging failed: {str(e)}", exc_info=True)
+            raise HTTPException(
+                status_code=500,
+                detail=f"W&B logging failed: {str(e)}"
+            )
 
+        # Get leaderboard URL with error handling
+        try:
+            leaderboard_url = f"https://wandb.ai/{run.entity}/{run.project}/leaderboard"
+            logger.info(f"Generated leaderboard URL: {leaderboard_url}")
+        except Exception as e:
+            logger.error(f"Failed to generate leaderboard URL: {e}", exc_info=True)
+            leaderboard_url = None
+
+        # Return response with direct evaluation results
         response_data = {
             "metrics": {
                 "vector": vector_eval,
                 "rerank": rerank_eval
-            }
+            },
+            "leaderboard_url": leaderboard_url
         }
-        logger.info(f"Sending response: {json.dumps(response_data)}")
-        logger.info("=== Weave Evaluation Complete ===")
+
+        # Finish W&B run with error handling
+        try:
+            if wandb.run is not None:
+                wandb.finish()
+                logger.info("W&B run finished successfully")
+        except Exception as e:
+            logger.error(f"W&B finish failed: {str(e)}", exc_info=True)
+
         return response_data
 
-    except HTTPException as he:
-        logger.error(f"HTTP Exception: {str(he)}")
-        raise he
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)}", exc_info=True)
+        # Ensure W&B run is finished even on error
+        try:
+            if wandb.run is not None:
+                wandb.finish()
+        except Exception as finish_error:
+            logger.error(f"Failed to finish W&B run on error: {str(finish_error)}", exc_info=True)
         raise HTTPException(
             status_code=500,
             detail=f"Evaluation failed: {str(e)}"

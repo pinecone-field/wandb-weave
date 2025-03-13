@@ -51,4 +51,5 @@ export interface WeaveEvaluation {
       coverage?: string;
     };
   }>;
+  leaderboard_url?: string;
 }

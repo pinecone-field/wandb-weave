@@ -1,0 +1,1 @@
+{"vector_coverage":0.8,"rerank_diversity":0.67,"rerank_relevance":0.67,"rerank_coverage":0.67,"_runtime":23.042492,"query":"What are foundation models according to NVIDIA?","_timestamp":1.741800665302071e+09,"_wandb":{"runtime":23},"vector_diversity":0.7,"vector_relevance":0.85,"_step":0}

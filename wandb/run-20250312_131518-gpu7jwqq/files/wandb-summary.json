@@ -1,0 +1,1 @@
+{"_step":0,"vector_relevance":0.33,"rerank_diversity":0.7,"rerank_coverage":0.8,"vector_coverage":0.33,"_timestamp":1.741810534847507e+09,"_runtime":16.815616,"_wandb":{"runtime":16},"query":"What is sovereign AI?","rerank_relevance":0.9,"vector_diversity":0.33}

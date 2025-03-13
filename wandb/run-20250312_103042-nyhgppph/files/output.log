@@ -1,0 +1,117 @@
+INFO:__main__:=== Starting Weave Evaluation ===
+INFO:__main__:Request payload: {"query":"What are foundation models according to NVIDIA?","vector_results":[{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fwhat-are-foundation-models%2F#1","score":0.429723591,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/what-are-foundation-models/","text":"Foundation Models Defined\nA foundation model is an AI neural network — trained on mountains of raw data, generally with unsupervised learning — that can be adapted to accomplish a broad range of tasks. \nTwo important concepts help define this umbrella category: Data gathering is easier, and opportunities are as wide as the horizon. \nNo Labels, Lots of Opportunity\nFoundation models generally learn from unlabeled datasets, saving the time and expense of manually describing each item in massive collections. \nEarlier neural networks were narrowly tuned for specific tasks.  With a little fine-tuning, foundation models can handle jobs from translating text to analyzing medical images to performing agent-based behaviors. \n“I think we’ve uncovered a very small fraction of the capabilities of existing foundation models, let alone future ones,” said Percy Liang, the center’s director, in the opening talk of the first workshop on foundation models.","title":"What Are Foundation Models?"},"latency":89.6702920049429},{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fwhat-are-foundation-models%2F#10","score":0.310274273,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/what-are-foundation-models/","text":"Factories and warehouses are already applying foundation models inside digital twins, realistic simulations that help find more efficient ways to work. \nFoundation models can ease the job of training autonomous vehicles and robots that assist humans on factory floors and logistics centers.  They also help train autonomous vehicles by creating realistic environments like the one below. \n\nNew uses for foundation models are emerging daily, as are challenges in applying them. \nSeveral papers on foundation and generative AI models describing risks such as:\n\namplifying bias implicit in the massive datasets used to train models,\nintroducing inaccurate or misleading information in images or videos, and\nviolating intellectual property rights of existing works.","title":"What Are Foundation Models?"},"latency":89.6702920049429},{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fwhat-are-foundation-models%2F#7","score":0.29766205,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/what-are-foundation-models/","text":"World foundation models, which can simulate real-world environments and predict accurate outcomes based on text, image, or video input, offer a promising solution. \nPhysical AI development teams are using NVIDIA Cosmos world foundation models, a suite of pre-trained autoregressive and diffusion models trained on 20 million hours of driving and robotics data, with the NVIDIA Omniverse platform to generate massive amounts of controllable, physics-based synthetic data for physical AI.  Awarded the Best AI And Best Overall Awards at CES 2025, Cosmos world foundation models are open models that can be customized for downstream use cases or improve precision on a specific task using use case-specific data. \nDozens of Models in Use\nHundreds of foundation models are now available.  One paper catalogs and classifies more than 50 major transformer models alone (see chart below).","title":"What Are Foundation Models?"},"latency":89.6702920049429},{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fwhat-are-foundation-models%2F#8","score":0.275381178,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/what-are-foundation-models/","text":"The Stanford group benchmarked 30 foundation models, noting the field is moving so fast they did not review some new and prominent ones. \nStartup NLP Cloud, a member of the NVIDIA Inception program that nurtures cutting-edge startups, says it uses about 25 large language models in a commercial offering that serves airlines, pharmacies and other users.  Experts expect that
+INFO:__main__:Query: What are foundation models according to NVIDIA?
+INFO:__main__:Vector results: [{"id": "https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fwhat-are-foundation-models%2F#1", "score": 0.429723591, "metadata": {"date": "", "source": "https://blogs.nvidia.com/blog/what-are-foundation-models/", "text": "Foundation Models Defined\nA foundation model is an AI neural network \u2014 trained on mountains of raw data, generally with unsupervised learning \u2014 that can be adapted to accomplish a broad range of tasks. \nTwo important concepts help define this umbrella category: Data gathering is easier, and opportunities are as wide as the horizon. \nNo Labels, Lots of Opportunity\nFoundation models generally learn from unlabeled datasets, saving the time and expense of manually describing each item in massive collections. \nEarlier neural networks were narrowly tuned for specific tasks.  With a little fine-tuning, foundation models can handle jobs from translating text to analyzing medical images to performing agent-based behaviors. \n\u201cI think we\u2019ve uncovered a very small fraction of the capabilities of existing foundation models, let alone future ones,\u201d said Percy Liang, the center\u2019s director, in the opening talk of the first workshop on foundation models.", "title": "What Are Foundation Models?"}, "latency": 89.6702920049429}]...
+INFO:__main__:Reranked results count: 3
+INFO:__main__:Starting vector evaluation with GPT-4...
+INFO:__main__:Query: What are foundation models according to NVIDIA?
+INFO:__main__:Formatted results: Result 1:
+Foundation Models Defined
+A foundation model is an AI neural network — trained on mountains of raw data, generally with unsupervised learning — that can be adapted to accomplish a broad range of tasks.
+Two important concepts help define this umbrella category: Data gathering is easier, and opportunities are as wide as the horizon.
+No Labels, Lots of Opportunity
+Foundation models generally learn from unlabeled datasets, saving the time and expense of manually describing each item in massive col...
+Result 2:
+Factories and warehouses are already applying foundation models inside digital twins, realistic simulations that help find more efficient ways to work.
+Foundation models can ease the job of training autonomous vehicles and robots that assist humans on factory floors and logistics centers.  They also help train autonomous vehicles by creating realistic environments like the one below.
+
+New uses for foundation models are emerging daily, as are challenges in applying them.
+Several papers on foun...
+Result 3:
+World foundation models, which can simulate real-world environments and predict accurate outcomes based on text, image, or video input, offer a promising solution.
+Physical AI development teams are using NVIDIA Cosmos world foundation models, a suite of pre-trained autoregressive and diffusion models trained on 20 million hours of driving and robotics data, with the NVIDIA Omniverse platform to generate massive amounts of controllable, physics-based synthetic data for physical AI.  Awarded the ...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What are foundation models according to NVIDIA?
+
+Results to evaluate:
+Result 1:
+Foundation Models Defined
+A foundation model is an AI neural network — trained on mountains of raw data, generally with unsupervised learning — that can be adapted to accomplish a broad range of tasks.
+Two important concepts help define this umbrella category: Data gathering is easier, and opportunities are as wide as the horizon.
+No Labels, Lots of Opportunity
+Foundation models generally learn from unlabeled datasets, saving the time and expense of manually describing each item in massive col...
+Result 2:
+Factories and warehouses are already applying foundation models inside digital twins, realistic simulations that help find more efficient ways to work.
+Foundation models can ease the job of training autonomous vehicles and robots that assist humans on factory floors and logistics centers.  They also help train autonomous vehicles by creating realistic environments like the one below.
+
+New uses for foundation models are emerging daily, as are challenges in applying them.
+Several papers on foun...
+Result 3:
+World foundation models, which can simulate real-world environments and predict accurate outcomes based on text, image, or video input, offer a promising solution.
+Physical AI development teams are using NVIDIA Cosmos world foundation models, a suite of pre-trained autoregressive and diffusion models trained on 20 million hours of driving and robotics data, with the NVIDIA Omniverse platform to generate massive amounts of controllable, physics-based synthetic data for physical AI.  Awarded the ...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Vector evaluation result: {"relevance": 0.85, "diversity": 0.7, "coverage": 0.8, "explanations": {"relevance": "All results are relevant to foundation models, with specific mention of NVIDIA in one of them. They discuss the concept, applications, and characteristics of foundation models. However, the exact term 'foundation model' in the context of NVIDIA's definition or products is not thoroughly explored in all results.", "diversity": "The results introduce different applications and facets of foundation models: Result 1 provides a general definition; Result 2 discusses applications in factories and warehouses, including digital twins and training autonomous systems; Result 3 focuses on world foundation models and NVIDIA Cosmos specifically, offering a connection to NVIDIA's products. While there is some overlap in the context of applications, each result provides distinct information.", "coverage": "The results collectively offer a good coverage of the concept of foundation models, their use cases, and an example involving NVIDIA. However, there may be more to NVIDIA's involvement with foundation models, other types of models, or broader contexts and implications, which are not fully captured."}}
+INFO:__main__:Starting rerank evaluation with GPT-4...
+INFO:__main__:Query: What are foundation models according to NVIDIA?
+INFO:__main__:Formatted results: Result 1:
+World foundation models, which can simulate real-world environments and predict accurate outcomes based on text, image, or video input, offer a promising solution.
+Physical AI development teams are using NVIDIA Cosmos world foundation models, a suite of pre-trained autoregressive and diffusion models trained on 20 million hours of driving and robotics data, with the NVIDIA Omniverse platform to generate massive amounts of controllable, physics-based synthetic data for physical AI.  Awarded the ...
+Result 2:
+The Stanford group benchmarked 30 foundation models, noting the field is moving so fast they did not review some new and prominent ones.
+Startup NLP Cloud, a member of the NVIDIA Inception program that nurtures cutting-edge startups, says it uses about 25 large language models in a commercial offering that serves airlines, pharmacies and other users.  Experts expect that a growing share of the models will be made open source on sites like Hugging Face’s model hub.
+Experts note a rising trend t...
+Result 3:
+Advancing Robot Training With Synthetic Motion Data
+At CES last month, NVIDIA announced the Isaac GR00T Blueprint for synthetic motion generation to help developers generate exponentially larger synthetic motion datasets to train humanoids using imitation learning.
+
+Highlights of the release include:
+
+Large-Scale Motion Data Generation: Uses simulation as well generative AI techniques to generate exponentially large and diverse datasets of humanlike movements, speeding up the data collection pr...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What are foundation models according to NVIDIA?
+
+Results to evaluate:
+Result 1:
+World foundation models, which can simulate real-world environments and predict accurate outcomes based on text, image, or video input, offer a promising solution.
+Physical AI development teams are using NVIDIA Cosmos world foundation models, a suite of pre-trained autoregressive and diffusion models trained on 20 million hours of driving and robotics data, with the NVIDIA Omniverse platform to generate massive amounts of controllable, physics-based synthetic data for physical AI.  Awarded the ...
+Result 2:
+The Stanford group benchmarked 30 foundation models, noting the field is moving so fast they did not review some new and prominent ones.
+Startup NLP Cloud, a member of the NVIDIA Inception program that nurtures cutting-edge startups, says it uses about 25 large language models in a commercial offering that serves airlines, pharmacies and other users.  Experts expect that a growing share of the models will be made open source on sites like Hugging Face’s model hub.
+Experts note a rising trend t...
+Result 3:
+Advancing Robot Training With Synthetic Motion Data
+At CES last month, NVIDIA announced the Isaac GR00T Blueprint for synthetic motion generation to help developers generate exponentially larger synthetic motion datasets to train humanoids using imitation learning.
+
+Highlights of the release include:
+
+Large-Scale Motion Data Generation: Uses simulation as well generative AI techniques to generate exponentially large and diverse datasets of humanlike movements, speeding up the data collection pr...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Rerank evaluation result: {"relevance": 0.67, "diversity": 0.67, "coverage": 0.67, "explanations": {"relevance": "Result 1 directly mentions NVIDIA Cosmos world foundation models and includes details on their use case within the NVIDIA Omniverse, which is highly relevant. Result 2 vaguely refers to foundation models and NVIDIA's involvement with startups working with large language models, which might be related but is not specific about NVIDIA's own foundation models. Result 3 focuses on NVIDIA\u2019s Isaac GR00T Blueprint for synthetic motion generation, which may be considered a type of foundation model but doesn't address the concept of 'foundation models' directly as the user query intended.", "diversity": "The results present three different aspects: Result 1 discusses world foundation models with a focus on NVIDIA\u2019s pre-trained models, Result 2 transitions into the benchmarking of foundation models and commercial applications of language models without a clear detailed link to NVIDIA foundation models, and Result 3 provides information on the Isaac GR00T blueprint which seems tangential to the main topic. There are similar aspects across the three, but they each contribute unique information.", "coverage": "The results cover different aspects of 'foundation models': the context of usage in AI and driving (Result 1), industry trends and company outreach (Result 2), and humanoid training (Result 3). However, none provide a comprehensive explanation of what NVIDIA considers 'foundation models' to be, nor do they offer a broad overview of the concept as it pertains specifically to NVIDIA, hence the scope is somewhat limited."}}
+INFO:__main__:Logging to W&B...
+INFO:__main__:Leaderboard URL: https://wandb.ai/relevance-pinecone/search-evaluator/leaderboard

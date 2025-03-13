@@ -170,22 +170,20 @@ const SafeResultsSummary = ({ vectorEvaluation, responses }: {
   responses: PineconeResponse[];
 }) => {
   try {
-    console.log('Attempting to render results summary with:', vectorEvaluation);
-    
     if (!vectorEvaluation?.metrics?.vector) {
-      console.log('No vector metrics available for results summary');
       return null;
     }
 
     return (
       <div className="p-4 border rounded-lg bg-gray-50">
         <h3 className="text-lg font-medium mb-4">Overall Results Summary</h3>
+        <p className="text-sm text-gray-600 mb-4">Search Results ({responses.length})</p>
+        
         <div className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <h4 className="text-sm font-medium text-gray-700">
-              Search Results ({responses.length})
-            </h4>
-            <div className="grid grid-cols-2 gap-4">
+          {/* Vector Search Column */}
+          <div>
+            <h4 className="text-md font-medium mb-4">Vector Search</h4>
+            <div className="space-y-4">
               <div>
                 <p className="text-sm font-medium text-gray-600">Relevance</p>
                 <p className="text-2xl">
@@ -206,6 +204,33 @@ const SafeResultsSummary = ({ vectorEvaluation, responses }: {
               </div>
             </div>
           </div>
+
+          {/* Reranked Results Column */}
+          {vectorEvaluation.metrics.rerank && (
+            <div>
+              <h4 className="text-md font-medium mb-4">Reranked Results</h4>
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Relevance</p>
+                  <p className="text-2xl">
+                    {(vectorEvaluation.metrics.rerank.relevance * 100).toFixed(1)}%
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Diversity</p>
+                  <p className="text-2xl">
+                    {(vectorEvaluation.metrics.rerank.diversity * 100).toFixed(1)}%
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Coverage</p>
+                  <p className="text-2xl">
+                    {(vectorEvaluation.metrics.rerank.coverage * 100).toFixed(1)}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -224,6 +249,7 @@ export default function WeaveEvaluator() {
   const [rerankedResults, setRerankedResults] = useState<RerankResponse[]>([])
   const [error, setError] = useState<ErrorResponse | null>(null)
   const [vectorEvaluation, setVectorEvaluation] = useState<WeaveEvaluation | null>(null)
+  const [llmLoading, setLlmLoading] = useState(false)
 
   const fetchAndEvaluate = async () => {
     setError(null)
@@ -233,6 +259,7 @@ export default function WeaveEvaluator() {
     setRerankedResults([])
     
     setLoading(true)
+    setLlmLoading(true)
     try {
       // First get vector search results
       const res = await fetch(`/api/pinecone?q=${encodeURIComponent(queryText)}&model=${selectedModel.id}`)
@@ -297,6 +324,7 @@ export default function WeaveEvaluator() {
       })
     }
     setLoading(false)
+    setLlmLoading(false)
   }
 
   return (
@@ -339,115 +367,141 @@ export default function WeaveEvaluator() {
             Query and Evaluate
           </button>
         </div>
-      </div>
 
-      {loading && (
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto" />
-          <p className="mt-2">Loading...</p>
-        </div>
-      )}
-
-      {error && (
-        <div className="bg-red-50 border-l-4 border-red-400 p-4 my-4">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800">{error.error}</h3>
-              <div className="mt-2 text-sm text-red-700">
-                <p>{error.details}</p>
-                {error.modelUsed && (
-                  <p className="mt-1">Model used: {error.modelUsed}</p>
+        {queryDetails && (
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <h3 className="text-lg font-medium mb-4 text-center">Query Details</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2 text-sm">
+                <p><span className="font-medium">Vector:</span> {queryDetails.vector}</p>
+                <p><span className="font-medium">Model:</span> {queryDetails.modelUsed}</p>
+                <p><span className="font-medium">Top K:</span> {queryDetails.topK}</p>
+              </div>
+              <div className="space-y-2 text-sm">
+                <p><span className="font-medium">Query Latency:</span> {queryDetails.queryLatency.toFixed(2)}ms</p>
+                {rerankedResults.length > 0 && (
+                  <p><span className="font-medium">Rerank Latency:</span> {rerankedResults[0]?.latency.toFixed(2)}ms</p>
                 )}
-                {error.embeddingDimensions && (
-                  <p className="mt-1">Embedding dimensions: {error.embeddingDimensions}</p>
-                )}
-                {error.queryLatency && (
-                  <p className="mt-1">Query latency: {error.queryLatency.toFixed(2)}ms</p>
-                )}
+                <p><span className="font-medium">Total Latency:</span> {queryDetails.totalLatency.toFixed(2)}ms</p>
               </div>
             </div>
           </div>
-        </div>
-      )}
-
-      {queryDetails && (
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <h3 className="text-lg font-medium mb-2">Query Details</h3>
-          <div className="space-y-2 text-sm">
-            <p><span className="font-medium">Vector:</span> {queryDetails.vector}</p>
-            <p><span className="font-medium">Model:</span> {queryDetails.modelUsed}</p>
-            <p><span className="font-medium">Top K:</span> {queryDetails.topK}</p>
-            <p><span className="font-medium">Query Latency:</span> {queryDetails.queryLatency.toFixed(2)}ms</p>
-            {rerankedResults.length > 0 && (
-              <p><span className="font-medium">Rerank Latency:</span> {rerankedResults[0]?.latency.toFixed(2)}ms</p>
-            )}
-            <p><span className="font-medium">Total Latency:</span> {queryDetails.totalLatency.toFixed(2)}ms</p>
-          </div>
-        </div>
-      )}
-
-      {vectorEvaluation && <SafeMetricsSection vectorEvaluation={vectorEvaluation} />}
-      {vectorEvaluation && <SafeResultsSummary vectorEvaluation={vectorEvaluation} responses={responses} />}
-
-      <div className="grid gap-6 md:grid-cols-2">
-        {responses.length > 0 && (
-          <div className="bg-white p-6 rounded-lg border">
-            <h3 className="text-xl font-semibold mb-4">Top 3 Vector Search Results</h3>
-            <div className="space-y-4">
-              {responses.slice(0, 3).map((response, index) => (
-                <div key={response.id} className="p-4 border rounded-lg">
-                  <p className="text-sm text-gray-500">Response {index + 1} of {responses.length}</p>
-                  <p className="mt-2">
-                    <span className="font-medium">ID:</span> {decodeUrlText(response.id)}
-                  </p>
-                  {vectorEvaluation?.individual_scores && (
-                    <>
-                      <p className="mt-2">
-                        <span className="font-medium">Relevance:</span> {(vectorEvaluation.individual_scores[index].relevance * 100).toFixed(1)}%
-                      </p>
-                      <p className="mt-2">
-                        <span className="font-medium">Diversity:</span> {(vectorEvaluation.individual_scores[index].diversity * 100).toFixed(1)}%
-                      </p>
-                      <p className="mt-2">
-                        <span className="font-medium">Coverage:</span> {(vectorEvaluation.individual_scores[index].coverage * 100).toFixed(1)}%
-                      </p>
-                    </>
-                  )}
-                  {response.metadata && Object.entries(response.metadata).map(([key, value]) => (
-                    value && <MetadataTooltip key={key} label={key} value={value} />
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
         )}
+      </div>
 
-        {rerankedResults.length > 0 && (
-          <div className="bg-white p-6 rounded-lg border">
-            <h3 className="text-xl font-semibold mb-4">Top 3 Reranked Results</h3>
-            <div className="space-y-4">
-              {rerankedResults.slice(0, 3).map((result, index) => (
-                <div key={result.id} className="p-4 border rounded-lg">
-                  <p className="text-sm text-gray-500">Result {index + 1} of {rerankedResults.length}</p>
-                  <p className="mt-2">
-                    <span className="font-medium">ID:</span> {decodeUrlText(result.id)}
-                  </p>
-                  <p className="mt-2">
-                    <span className="font-medium">Rerank Score:</span> {(result.rerank_score * 100).toFixed(1)}%
-                  </p>
-                  {result.metadata && Object.entries(result.metadata).map(([key, value]) => (
-                    value && <MetadataTooltip key={key} label={key} value={value} />
-                  ))}
-                </div>
-              ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          {loading && !llmLoading && (
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto" />
+              <p className="mt-2">Searching...</p>
             </div>
-          </div>
-        )}
+          )}
+
+          {error && (
+            <div className="bg-red-50 border-l-4 border-red-400 p-4">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">{error.error}</h3>
+                  <div className="mt-2 text-sm text-red-700">
+                    <p>{error.details}</p>
+                    {error.modelUsed && (
+                      <p className="mt-1">Model used: {error.modelUsed}</p>
+                    )}
+                    {error.embeddingDimensions && (
+                      <p className="mt-1">Embedding dimensions: {error.embeddingDimensions}</p>
+                    )}
+                    {error.queryLatency && (
+                      <p className="mt-1">Query latency: {error.queryLatency.toFixed(2)}ms</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {responses.length > 0 && (
+            <div className="bg-white p-6 rounded-lg border">
+              <h3 className="text-xl font-semibold mb-4">Top 3 Vector Search Results</h3>
+              <div className="space-y-4">
+                {responses.slice(0, 3).map((response, index) => (
+                  <div key={response.id} className="p-4 border rounded-lg">
+                    <p className="text-sm text-gray-500">Response {index + 1} of {responses.length}</p>
+                    <p className="mt-2">
+                      <span className="font-medium">ID:</span> {decodeUrlText(response.id)}
+                    </p>
+                    <p className="mt-2">
+                      <span className="font-medium">Vector Similarity:</span> {(response.score * 100).toFixed(1)}%
+                    </p>
+                    {vectorEvaluation?.individual_scores && (
+                      <p className="mt-2">
+                        <span className="font-medium">LLM Relevance:</span> {(vectorEvaluation.individual_scores[index].relevance * 100).toFixed(1)}%
+                      </p>
+                    )}
+                    {response.metadata && Object.entries(response.metadata).map(([key, value]) => (
+                      value && <MetadataTooltip key={key} label={key} value={value} />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {rerankedResults.length > 0 && (
+            <div className="bg-white p-6 rounded-lg border">
+              <h3 className="text-xl font-semibold mb-4">Top 3 Reranked Results</h3>
+              <div className="space-y-4">
+                {rerankedResults.slice(0, 3).map((result, index) => (
+                  <div key={result.id} className="p-4 border rounded-lg">
+                    <p className="text-sm text-gray-500">Result {index + 1} of {rerankedResults.length}</p>
+                    <p className="mt-2">
+                      <span className="font-medium">ID:</span> {decodeUrlText(result.id)}
+                    </p>
+                    <p className="mt-2">
+                      <span className="font-medium">Rerank Score:</span> {(result.rerank_score * 100).toFixed(1)}%
+                    </p>
+                    {result.metadata && Object.entries(result.metadata).map(([key, value]) => (
+                      value && <MetadataTooltip key={key} label={key} value={value} />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div>
+          {llmLoading && (
+            <div className="text-center p-6 bg-white rounded-lg border">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto" />
+              <p className="mt-2 text-gray-600">Evaluating results with GPT-4...</p>
+            </div>
+          )}
+
+          {!llmLoading && (
+            <>
+              {vectorEvaluation && <SafeMetricsSection vectorEvaluation={vectorEvaluation} />}
+              {vectorEvaluation && <SafeResultsSummary vectorEvaluation={vectorEvaluation} responses={responses} />}
+              {vectorEvaluation?.leaderboard_url && (
+                <div className="text-center">
+                  <a 
+                    href={vectorEvaluation.leaderboard_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 underline"
+                  >
+                    View Results on Leaderboard →
+                  </a>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   )

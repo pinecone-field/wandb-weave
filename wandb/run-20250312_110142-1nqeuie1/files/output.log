@@ -1,0 +1,113 @@
+INFO:__main__:=== Starting Weave Evaluation ===
+INFO:__main__:Request payload: {"query":"This is an example query.","vector_results":[{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Ftemenos-ai-customer-service-banking%2F#3","score":0.227798685,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/temenos-ai-customer-service-banking/","text":"Subscribe to the AI Podcast\nGet the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn.","title":"Temenos’ Barb Morgan Shares How Chatbots and AI Agents Are Reshaping Customer Service in Banking"},"latency":100.31458400000702},{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Ftemenos-ai-customer-service-banking%2F#2","score":0.144308656,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/temenos-ai-customer-service-banking/","text":"You Might Also Like… \nFirsthand’s Jon Heller Shares How AI Agents Enhance Consumer Journeys in Retail\nLearn how AI agents are transforming the retail landscape by personalizing customer journeys, converting marketing interactions into valuable research data and enhancing the customer experience with hyper-personalized insights and recommendations. \nSnowflake’s Baris Gultekin on Unlocking the Value of Data With Large Language Models\nSee how Snowflake’s AI Data Cloud platform helps enterprises unlock the value of data by transforming it into actionable insights and applications, using large language models. \nSequoia Capital’s Pat Grady and Sonya Huang on Generative AI\nHear how AI is revolutionizing art, design and media by enabling unique, personalized content creation at an unprecedented scale.","title":"Temenos’ Barb Morgan Shares How Chatbots and AI Agents Are Reshaping Customer Service in Banking"},"latency":100.31458400000702},{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fevo-2-biomolecular-ai%2F#6","score":0.123309374,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/evo-2-biomolecular-ai/","text":"And in other scientific fields, Evo 2 could be applied to design biofuels or engineer proteins that break down oil or plastic. \n“Deploying a model like Evo 2 is like sending a powerful new telescope out to the farthest reaches of the universe,” said Dave Burke, Arc’s chief technology officer.  “We know there’s immense opportunity for exploration, but we don’t yet know what we’re going to discover. ”\nRead more about Evo 2 on the NVIDIA Technical Blog and in Arc’s technical report. \nSee notice regarding software product information.","title":"Massive Foundation Model for Biomolecular Sciences Now Available via NVIDIA BioNeMo"},"latency":100.31458400000702},{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Fgeforce-now-thursday-avowed%2F#3","score":0.123235799,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/geforce-now-thursday-avowed/","text":"With its immersive storytelling, interactive environments and choice-driven gameplay, Lost Records: Bloom & Rage promises a captivating journey through time, nostalgia and the complexities of lifelong friendships. \nLook for the following games available to stream in the cloud this week:\n\nAvowed (New release on Steam, Battle. net and Xbox, available on PC Game Pass, Feb.  18)\nWarhammer 40,000: Rogue Trader (New release on Xbox, available on PC Game Pass, Feb.  20)\nLost Records: Bloom & Rage (New release on Steam, Feb.  18)\nAbiotic Factor (Steam)\nHUMANITY (Steam)\nSongs of Silence (Steam)\n\nWhat are you planning to play this weekend?  Let us know on X or in the comments below. \n\nWhat's a gaming promise you made to yourself this year?","title":"Step Into the World of ‘Avowed’ on GeForce NOW"},"latency":100.31458400000702},{"id":"https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Facademy-award-scientific-technical-film-2025%2F#3","score":0.115855731,"metadata":{"date":"","source":"https://blogs.nvidia.com/blog/academy-award-scientific-technical-film-2025/","text":"mp4\nIn this extreme example of four samples average per pixel, Disney’s ML Denoiser does a remarkab
+INFO:__main__:Query: This is an example query.
+INFO:__main__:Vector results: [{"id": "https%3A%2F%2Fblogs.nvidia.com%2Fblog%2Ftemenos-ai-customer-service-banking%2F#3", "score": 0.227798685, "metadata": {"date": "", "source": "https://blogs.nvidia.com/blog/temenos-ai-customer-service-banking/", "text": "Subscribe to the AI Podcast\nGet the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn.", "title": "Temenos\u2019 Barb Morgan Shares How Chatbots and AI Agents Are Reshaping Customer Service in Banking"}, "latency": 100.31458400000702}]...
+INFO:__main__:Reranked results count: 3
+INFO:__main__:Starting vector evaluation with GPT-4...
+INFO:__main__:Query: This is an example query.
+INFO:__main__:Formatted results: Result 1:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 2:
+You Might Also Like… 
+Firsthand’s Jon Heller Shares How AI Agents Enhance Consumer Journeys in Retail
+Learn how AI agents are transforming the retail landscape by personalizing customer journeys, converting marketing interactions into valuable research data and enhancing the customer experience with hyper-personalized insights and recommendations.
+Snowflake’s Baris Gultekin on Unlocking the Value of Data With Large Language Models
+See how Snowflake’s AI Data Cloud platform helps enterprises unl...
+Result 3:
+And in other scientific fields, Evo 2 could be applied to design biofuels or engineer proteins that break down oil or plastic.
+“Deploying a model like Evo 2 is like sending a powerful new telescope out to the farthest reaches of the universe,” said Dave Burke, Arc’s chief technology officer.  “We know there’s immense opportunity for exploration, but we don’t yet know what we’re going to discover. ”
+Read more about Evo 2 on the NVIDIA Technical Blog and in Arc’s technical report.
+See notice reg...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: This is an example query.
+
+Results to evaluate:
+Result 1:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 2:
+You Might Also Like… 
+Firsthand’s Jon Heller Shares How AI Agents Enhance Consumer Journeys in Retail
+Learn how AI agents are transforming the retail landscape by personalizing customer journeys, converting marketing interactions into valuable research data and enhancing the customer experience with hyper-personalized insights and recommendations.
+Snowflake’s Baris Gultekin on Unlocking the Value of Data With Large Language Models
+See how Snowflake’s AI Data Cloud platform helps enterprises unl...
+Result 3:
+And in other scientific fields, Evo 2 could be applied to design biofuels or engineer proteins that break down oil or plastic.
+“Deploying a model like Evo 2 is like sending a powerful new telescope out to the farthest reaches of the universe,” said Dave Burke, Arc’s chief technology officer.  “We know there’s immense opportunity for exploration, but we don’t yet know what we’re going to discover. ”
+Read more about Evo 2 on the NVIDIA Technical Blog and in Arc’s technical report.
+See notice reg...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Vector evaluation result: {"relevance": 0.0, "diversity": 1.0, "coverage": 0.0, "explanations": {"relevance": "The presented search results do not answer or pertain directly to the example query 'This is an example query,' since the query itself does not specify a clear topic or intent to match against.", "diversity": "The search results are diverse as they feature content from different domains: a listing of podcast platforms, the application of AI in retail, and a discussion on Evo 2's scientific applications.", "coverage": "Given the nonspecific and placeholder nature of the query 'This is an example query,' there are no discernible different aspects that need coverage. Therefore, the results can't be evaluated for coverage against the query."}}
+INFO:__main__:Starting rerank evaluation with GPT-4...
+INFO:__main__:Query: This is an example query.
+INFO:__main__:Formatted results: Result 1:
+Instead of traditional AI models that rapidly generate a one-shot answer to a user prompt, models using this technique allocate extra computational effort during inference, allowing them to reason through multiple potential responses before arriving at the best answer.
+On tasks like generating complex, customized code for developers, this AI reasoning process can take multiple minutes, or even hours — and can easily require over 100x compute for challenging queries compared to a single inferenc...
+Result 2:
+mp4
+In this extreme example of four samples average per pixel, Disney’s ML Denoiser does a remarkable job.  Inside Out 2 © Disney/Pixar 
+Applying U-Nets to Denoising
+Timo Aila received a Technical Achievement Award, alongside Attila T.  Áfra, for his pioneering contributions to AI image denoising.  Aila led the early development of the U-Net architecture, which has proven able to remove noise while preserving fine details, and has become a vital technique across the film industry.  Áfra implemen...
+Result 3:
+Its release has been called the iPhone moment for AI because it helped so many people see how they could use the technology.
+One timeline describes the path from early AI research to ChatGPT.  (Source: blog. bytebytego. com)
+Going Multimodal
+Foundation models have also expanded to process and generate multiple data types, or modalities, such as text, images, audio and video.  VLMs are one type of multimodal models that can understand video, image and text inputs while producing text or visual o...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: This is an example query.
+
+Results to evaluate:
+Result 1:
+Instead of traditional AI models that rapidly generate a one-shot answer to a user prompt, models using this technique allocate extra computational effort during inference, allowing them to reason through multiple potential responses before arriving at the best answer.
+On tasks like generating complex, customized code for developers, this AI reasoning process can take multiple minutes, or even hours — and can easily require over 100x compute for challenging queries compared to a single inferenc...
+Result 2:
+mp4
+In this extreme example of four samples average per pixel, Disney’s ML Denoiser does a remarkable job.  Inside Out 2 © Disney/Pixar 
+Applying U-Nets to Denoising
+Timo Aila received a Technical Achievement Award, alongside Attila T.  Áfra, for his pioneering contributions to AI image denoising.  Aila led the early development of the U-Net architecture, which has proven able to remove noise while preserving fine details, and has become a vital technique across the film industry.  Áfra implemen...
+Result 3:
+Its release has been called the iPhone moment for AI because it helped so many people see how they could use the technology.
+One timeline describes the path from early AI research to ChatGPT.  (Source: blog. bytebytego. com)
+Going Multimodal
+Foundation models have also expanded to process and generate multiple data types, or modalities, such as text, images, audio and video.  VLMs are one type of multimodal models that can understand video, image and text inputs while producing text or visual o...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Rerank evaluation result: {"relevance": 0.0, "diversity": 1.0, "coverage": 0.0, "explanations": {"relevance": "The query 'This is an example query' lacks specific content or context, so none of the given results directly answer it. We cannot judge relevance in this case because the example query is too vague. Therefore, a relevance score of 0 is appropriate.", "diversity": "The results provided cover vastly different topics: AI reasoning and response generation, AI for image denoising in the film industry, and the broad impact of multimodal AI on society and technology. Since none of the results overlap in terms of subject matter, the diversity score is high at 1.", "coverage": "The example query provides no information to assess what aspects need to be covered. Given the generality of the query and the unrelated nature of the results, no result contributes to a coverage of the example query. Thus, the coverage score is 0."}}
+INFO:__main__:Logging to W&B...
+INFO:__main__:Leaderboard URL: https://wandb.ai/relevance-pinecone/search-evaluator/leaderboard
