@@ -1,48 +1,33 @@
 import { NextResponse } from 'next/server'
-import wandb from '@wandb/sdk'
-import { PineconeResponse, WandbEvaluation } from '@/types'
 
-const evaluateSearchResults = async (query: string, results: PineconeResponse[]): Promise<WandbEvaluation> => {
-  // Calculate basic metrics
-  const meanScore = results.reduce((acc, r) => acc + r.score, 0) / results.length;
-  const scores = results.map(r => r.score);
-  const stdScore = Math.sqrt(
-    scores.reduce((acc, score) => acc + Math.pow(score - meanScore, 2), 0) / scores.length
-  );
-
-  // Create evaluation object
-  const evaluation: WandbEvaluation = {
-    metrics: {
-      mean_score: meanScore,
-      std_score: stdScore,
-      latency: results[0]?.latency || 0
-    },
-    results: results.map(r => ({
-      id: r.id,
-      score: r.score,
-      metadata: r.metadata,
-      latency: r.latency
-    }))
-  };
-
-  await wandb.log({ query, evaluation });
-  return evaluation;
-};
+function getRunName(): string {
+  const now = new Date()
+  return `query-weave-evaluator-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`
+}
 
 export async function POST(request: Request) {
   try {
-    const { responses, rerankedResults, query } = await request.json()
-    
-    const vectorResults = await evaluateSearchResults(query, responses);
-    const rerankEvaluation = rerankedResults?.length ? 
-      await evaluateSearchResults(query, rerankedResults) : null;
+    const payload = await request.json();
+    console.log('wandb route received:', payload);
 
-    return NextResponse.json({
-      vector_evaluation: vectorResults,
-      reranked_evaluation: rerankEvaluation
-    })
+    // Add run name to payload
+    payload.run_name = getRunName();
+
+    const weaveResponse = await fetch('http://127.0.0.1:5328/cgi-bin/weave', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!weaveResponse.ok) {
+      const errorText = await weaveResponse.text();
+      console.error('Weave error response:', errorText);
+      throw new Error(`Weave evaluation failed: ${weaveResponse.statusText}\n${errorText}`);
+    }
+
+    return NextResponse.json(await weaveResponse.json());
   } catch (error) {
-    console.error('W&B API error:', error)
-    return NextResponse.json({ error: 'Failed to evaluate responses' }, { status: 500 })
+    console.error('Evaluation error:', error);
+    return NextResponse.json({ error: 'Failed to evaluate responses' }, { status: 500 });
   }
 } 

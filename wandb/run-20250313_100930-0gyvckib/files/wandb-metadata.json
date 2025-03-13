@@ -1,0 +1,16 @@
+{
+  "os": "macOS-14.7.4-arm64-arm-64bit",
+  "python": "CPython 3.12.5",
+  "startedAt": "2025-03-13T17:09:30.772917Z",
+  "program": "/Users/cory/dev/pinecone-field/wandb-weave/cgi-bin/app.py",
+  "codePath": "cgi-bin/app.py",
+  "git": {
+    "remote": "git@github.com:pinecone-field/wandb-weave.git",
+    "commit": "09fcca03ca8f3ecc4aea57f60b87a2078134d10c"
+  },
+  "email": "cory@pinecone.io",
+  "root": "/Users/cory/dev/pinecone-field/wandb-weave",
+  "host": "Corys-work-MacBook-Pro.local",
+  "executable": "/Users/cory/dev/pinecone-field/wandb-weave/.venv/bin/python3",
+  "codePathLocal": "cgi-bin/app.py"
+}

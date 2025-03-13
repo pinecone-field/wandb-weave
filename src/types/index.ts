@@ -18,13 +18,38 @@ export interface RerankResponse extends PineconeResponse {
   score_spread: number
 }
 
-export interface EvaluationMetrics {
-  mean_score: number
-  std_score: number
-  latency: number
+export interface WeaveModelOutput {
+  vector_results: PineconeResponse[];
+  reranked_results: RerankResponse[];
+  latency: number;
 }
 
-export interface WandbEvaluation {
-  metrics: EvaluationMetrics
-  results: PineconeResponse[]
-} 
+export interface EvaluationResult {
+  relevance: number;
+  diversity: number;
+  coverage: number;
+  explanations: {
+    relevance: string;
+    diversity: string;
+    coverage: string;
+  };
+}
+
+export interface WeaveEvaluation {
+  metrics: {
+    vector: EvaluationResult;
+    rerank: EvaluationResult | null;
+  };
+  model_outputs: WeaveModelOutput[];
+  individual_scores?: Array<{
+    relevance: number;
+    diversity: number;
+    coverage: number;
+    explanations?: {
+      relevance?: string;
+      diversity?: string;
+      coverage?: string;
+    };
+  }>;
+  leaderboard_url?: string;
+}

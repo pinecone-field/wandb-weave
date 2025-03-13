@@ -1,0 +1,1 @@
+{"vector_diversity":0.7,"_runtime":16.255625,"rerank_diversity":0.1,"_step":0,"query":"What is NVIDIA's most interesting project these days?","rerank_coverage":0.3,"vector_relevance":0.3,"rerank_relevance":0.4,"_wandb":{"runtime":16},"vector_coverage":0.5,"_timestamp":1.741885787027748e+09}

@@ -1,0 +1,17 @@
+{"time":"2025-03-13T09:32:32.891446-07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/Users/cory/dev/pinecone-field/wandb-weave/wandb/run-20250313_093232-phzhngpa/logs/debug-core.log"}
+{"time":"2025-03-13T09:32:33.006578-07:00","level":"INFO","msg":"created new stream","id":"phzhngpa"}
+{"time":"2025-03-13T09:32:33.006644-07:00","level":"INFO","msg":"stream: started","id":"phzhngpa"}
+{"time":"2025-03-13T09:32:33.006753-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"phzhngpa"}
+{"time":"2025-03-13T09:32:33.006922-07:00","level":"INFO","msg":"handler: started","stream_id":"phzhngpa"}
+{"time":"2025-03-13T09:32:33.007052-07:00","level":"INFO","msg":"sender: started","stream_id":"phzhngpa"}
+{"time":"2025-03-13T09:32:33.158435-07:00","level":"ERROR","msg":"HTTP error","status":403,"method":"POST","url":"https://api.wandb.ai/graphql"}
+{"time":"2025-03-13T09:32:33.158753-07:00","level":"ERROR","msg":"sender: upsertRun:","error":"failed to upsert bucket: returned error 403: {\"data\":{\"upsertBucket\":null},\"errors\":[{\"message\":\"permission denied\",\"path\":[\"upsertBucket\"],\"extensions\":{\"code\":\"PERMISSION_ERROR\"}}]}"}
+{"time":"2025-03-13T09:33:04.197781-07:00","level":"INFO","msg":"stream: closing","id":"phzhngpa"}
+{"time":"2025-03-13T09:33:04.198623-07:00","level":"ERROR","msg":"sender: upsertConfig: RunRecord is nil"}
+{"time":"2025-03-13T09:33:04.315951-07:00","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/graphql"}
+{"time":"2025-03-13T09:33:04.316707-07:00","level":"ERROR","msg":"runfiles: CreateRunFiles returned error: returned error 404: {\"data\":{\"createRunFiles\":null},\"errors\":[{\"message\":\"project cory-pinecone/weave-pinecone not found during createRunFiles\",\"path\":[\"createRunFiles\"]}]}"}
+{"time":"2025-03-13T09:33:04.32062-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-13T09:33:04.321611-07:00","level":"INFO","msg":"sender: closed","stream_id":"phzhngpa"}
+{"time":"2025-03-13T09:33:04.321601-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"phzhngpa"}
+{"time":"2025-03-13T09:33:04.322031-07:00","level":"INFO","msg":"handler: closed","stream_id":"phzhngpa"}
+{"time":"2025-03-13T09:33:04.322328-07:00","level":"INFO","msg":"stream: closed","id":"phzhngpa"}

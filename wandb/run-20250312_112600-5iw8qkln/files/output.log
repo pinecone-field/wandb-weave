@@ -1,0 +1,101 @@
+INFO:__main__:Query: What is NVIDIA working on now?
+INFO:__main__:Formatted results: Result 1:
+The “one team” mindset that everyone shared sped the rate of innovation and helped spread key lessons and takeaways across numerous areas of the business.
+“Our positive attitude toward innovation sets us apart,” Gutenburg said.  “A lot of the ideas we use today began as crazy ideas that didn’t get shot down — you just never know the worth of an idea until you try it. ”
+The pursuit of new frontiers that can drive the constant evolution of NVIDIA’s technology is what motivates him every day.
+“My...
+Result 2:
+Learn how to use USD and continue to optimize 3D workflows with the new self-paced “Learn OpenUSD” curriculum for 3D developers and practitioners, available for free through the NVIDIA Deep Learning Institute.  For more resources on OpenUSD, explore the Alliance for OpenUSD forum and the AOUSD website.
+Stay up to date by subscribing to NVIDIA news, joining the community and following NVIDIA Omniverse on Instagram, LinkedIn, Medium and X.
+Featured image courtesy of Fourier....
+Result 3:
+Gutenburg was especially drawn to NVIDIA’s open culture.  He appreciated how, instead of dwelling on reasons why an idea can’t be pursued, employees are encouraged to discover ways to make it a reality.
+“Executing on ideas that improve thermal performance cannot be done alone and is made possible by the work done by all the other engineering disciplines,” he said.  “It can take years of work to fully realize these ideas, but the results can be incredible. ”
+
+Gutenburg loves to work with physica...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What is NVIDIA working on now?
+
+Results to evaluate:
+Result 1:
+The “one team” mindset that everyone shared sped the rate of innovation and helped spread key lessons and takeaways across numerous areas of the business.
+“Our positive attitude toward innovation sets us apart,” Gutenburg said.  “A lot of the ideas we use today began as crazy ideas that didn’t get shot down — you just never know the worth of an idea until you try it. ”
+The pursuit of new frontiers that can drive the constant evolution of NVIDIA’s technology is what motivates him every day.
+“My...
+Result 2:
+Learn how to use USD and continue to optimize 3D workflows with the new self-paced “Learn OpenUSD” curriculum for 3D developers and practitioners, available for free through the NVIDIA Deep Learning Institute.  For more resources on OpenUSD, explore the Alliance for OpenUSD forum and the AOUSD website.
+Stay up to date by subscribing to NVIDIA news, joining the community and following NVIDIA Omniverse on Instagram, LinkedIn, Medium and X.
+Featured image courtesy of Fourier....
+Result 3:
+Gutenburg was especially drawn to NVIDIA’s open culture.  He appreciated how, instead of dwelling on reasons why an idea can’t be pursued, employees are encouraged to discover ways to make it a reality.
+“Executing on ideas that improve thermal performance cannot be done alone and is made possible by the work done by all the other engineering disciplines,” he said.  “It can take years of work to fully realize these ideas, but the results can be incredible. ”
+
+Gutenburg loves to work with physica...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Vector evaluation result: {"relevance": 0.6, "diversity": 0.7, "coverage": 0.6, "explanations": {"relevance": "The results partially answer the query. Result 1 discusses NVIDIA's innovation and team mindset but does not provide specific current projects. Result 2 mentions a specific NVIDIA endeavor, OpenUSD, which adds some relevance. Result 3 focuses on the culture and broad engineering efforts, without specifics on current projects.", "diversity": "The results present some diversity: Result 1 talks about the innovation mindset, Result 2 provides information on learning resources and community involvement, and Result 3 talks about the engineering challenges and culture. However, Results 1 and 3 are somewhat overlapping as both revolve around company culture and approach to innovation.", "coverage": "The results cover NVIDIA's culture, learning resources, and engineering challenges, providing a general overview of the company's activities. However, they lack specific, detailed information about a comprehensive range of current projects or products that NVIDIA is working on now."}}
+INFO:__main__:Query: What is NVIDIA working on now?
+INFO:__main__:Formatted results: Result 1:
+Their work helps minimize the amount of energy used on cooling, increasing how much computing power a GPU delivers per watt of energy used.
+“There’s no better place for thermal engineering than NVIDIA,” he said.  “Our products constantly require innovation to keep increasing their capabilities and efficiency. ”
+
+NVIDIA has advanced performance per watt to the point where NVIDIA Blackwell offers the computational power of the Titan supercomputer launched 10 years ago — a $100 million system the ...
+Result 2:
+Bringing NVIDIA AI and accelerated computing to the forefront of OT security can help organizations protect what matters most — now and in the future.
+Learn more by attending the NVIDIA GTC global AI conference, running March 17-21, where Armis, Check Point and CrowdStrike  cybersecurity leaders will host sessions about their collaborations with NVIDIA....
+Result 3:
+“Given that future AI systems will likely rely heavily on foundation models, it is imperative that we, as a community, come together to develop more rigorous principles for foundation models and guidance for their responsible development and deployment,” said the Stanford paper on foundation models.
+Current ideas for safeguards include filtering prompts and their outputs, recalibrating models on the fly and scrubbing massive datasets.
+“These are issues we’re working on as a research community,...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What is NVIDIA working on now?
+
+Results to evaluate:
+Result 1:
+Their work helps minimize the amount of energy used on cooling, increasing how much computing power a GPU delivers per watt of energy used.
+“There’s no better place for thermal engineering than NVIDIA,” he said.  “Our products constantly require innovation to keep increasing their capabilities and efficiency. ”
+
+NVIDIA has advanced performance per watt to the point where NVIDIA Blackwell offers the computational power of the Titan supercomputer launched 10 years ago — a $100 million system the ...
+Result 2:
+Bringing NVIDIA AI and accelerated computing to the forefront of OT security can help organizations protect what matters most — now and in the future.
+Learn more by attending the NVIDIA GTC global AI conference, running March 17-21, where Armis, Check Point and CrowdStrike  cybersecurity leaders will host sessions about their collaborations with NVIDIA....
+Result 3:
+“Given that future AI systems will likely rely heavily on foundation models, it is imperative that we, as a community, come together to develop more rigorous principles for foundation models and guidance for their responsible development and deployment,” said the Stanford paper on foundation models.
+Current ideas for safeguards include filtering prompts and their outputs, recalibrating models on the fly and scrubbing massive datasets.
+“These are issues we’re working on as a research community,...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

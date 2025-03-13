@@ -1,0 +1,24 @@
+2025-03-13 09:59:42,278 INFO    MainThread:81779 [wandb_setup.py:_flush():67] Current SDK version is 0.19.8
+2025-03-13 09:59:42,278 INFO    MainThread:81779 [wandb_setup.py:_flush():67] Configure stats pid to 81779
+2025-03-13 09:59:42,279 INFO    MainThread:81779 [wandb_setup.py:_flush():67] Loading settings from /Users/cory/.config/wandb/settings
+2025-03-13 09:59:42,279 INFO    MainThread:81779 [wandb_setup.py:_flush():67] Loading settings from /Users/cory/dev/pinecone-field/wandb-weave/wandb/settings
+2025-03-13 09:59:42,279 INFO    MainThread:81779 [wandb_setup.py:_flush():67] Loading settings from environment variables
+2025-03-13 09:59:42,279 INFO    MainThread:81779 [wandb_init.py:setup_run_log_directory():647] Logging user logs to /Users/cory/dev/pinecone-field/wandb-weave/wandb/run-20250313_095942-bvvtksmp/logs/debug.log
+2025-03-13 09:59:42,279 INFO    MainThread:81779 [wandb_init.py:setup_run_log_directory():648] Logging internal logs to /Users/cory/dev/pinecone-field/wandb-weave/wandb/run-20250313_095942-bvvtksmp/logs/debug-internal.log
+2025-03-13 09:59:42,279 INFO    MainThread:81779 [wandb_init.py:init():761] calling init triggers
+2025-03-13 09:59:42,279 INFO    MainThread:81779 [wandb_init.py:init():766] wandb.init called with sweep_config: {}
+config: {'model': 'llama-text-embed-v2', 'index': 'nvidia-blog-embeddings', 'top_k': 10, 'rerank_model': 'cross-encoder/ms-marco-MiniLM-L-6-v2', '_wandb': {}}
+2025-03-13 09:59:42,279 INFO    MainThread:81779 [wandb_init.py:init():784] starting backend
+2025-03-13 09:59:42,279 INFO    MainThread:81779 [wandb_init.py:init():788] sending inform_init request
+2025-03-13 09:59:42,320 INFO    MainThread:81779 [wandb_init.py:init():798] backend started and connected
+2025-03-13 09:59:42,324 INFO    MainThread:81779 [wandb_init.py:init():891] updated telemetry
+2025-03-13 09:59:42,371 INFO    MainThread:81779 [wandb_init.py:init():915] communicating run to backend with 90.0 second timeout
+2025-03-13 09:59:42,477 ERROR   MainThread:81779 [wandb_init.py:init():1478] error in wandb.init()
+Traceback (most recent call last):
+  File "/Users/cory/dev/pinecone-field/wandb-weave/.venv/lib/python3.12/site-packages/wandb/sdk/wandb_init.py", line 1468, in init
+    return wi.init(run_settings, run_config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cory/dev/pinecone-field/wandb-weave/.venv/lib/python3.12/site-packages/wandb/sdk/wandb_init.py", line 963, in init
+    raise error
+wandb.errors.errors.CommError: failed to upsert bucket: returned error 403: {"data":{"upsertBucket":null},"errors":[{"message":"permission denied","path":["upsertBucket"],"extensions":{"code":"PERMISSION_ERROR"}}]}
+2025-03-13 10:01:05,551 INFO    MsgRouterThr:81779 [mailbox.py:close():129] Closing mailbox, abandoning 0 handles.

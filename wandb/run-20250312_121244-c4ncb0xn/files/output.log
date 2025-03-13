@@ -1,0 +1,103 @@
+INFO:__main__:Query: What is NIMs?
+INFO:__main__:Formatted results: Result 1:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 2:
+Setting Up Students and Professionals for Success
+The Utah AI education initiative will benefit students entering the job market and working professionals by helping them expand their skill sets beyond community college or adult education courses.
+Utah state agencies are exploring how internship and apprenticeship programs can offer students hands-on experience with AI skills, helping bridge the gap between education and industry needs.  This initiative aligns with Utah’s broader goals of foste...
+Result 3:
+Foundation Models Defined
+A foundation model is an AI neural network — trained on mountains of raw data, generally with unsupervised learning — that can be adapted to accomplish a broad range of tasks.
+Two important concepts help define this umbrella category: Data gathering is easier, and opportunities are as wide as the horizon.
+No Labels, Lots of Opportunity
+Foundation models generally learn from unlabeled datasets, saving the time and expense of manually describing each item in massive col...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What is NIMs?
+
+Results to evaluate:
+Result 1:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 2:
+Setting Up Students and Professionals for Success
+The Utah AI education initiative will benefit students entering the job market and working professionals by helping them expand their skill sets beyond community college or adult education courses.
+Utah state agencies are exploring how internship and apprenticeship programs can offer students hands-on experience with AI skills, helping bridge the gap between education and industry needs.  This initiative aligns with Utah’s broader goals of foste...
+Result 3:
+Foundation Models Defined
+A foundation model is an AI neural network — trained on mountains of raw data, generally with unsupervised learning — that can be adapted to accomplish a broad range of tasks.
+Two important concepts help define this umbrella category: Data gathering is easier, and opportunities are as wide as the horizon.
+No Labels, Lots of Opportunity
+Foundation models generally learn from unlabeled datasets, saving the time and expense of manually describing each item in massive col...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Vector evaluation result: {"relevance": 0.0, "diversity": 1.0, "coverage": 0.0, "explanations": {"relevance": "None of the results directly answer the query regarding what 'NIMs' refers to. All results seem to relate to AI and education initiatives, but none provides information on 'NIMs', possibly referring to National Incident Management System, Neural Implicit Models, or other definitions.", "diversity": "Each of the results focuses on a different aspect related to AI, such as podcasts, education initiatives, and foundational AI models, hence the results are diverse and non-redundant.", "coverage": "Given that the results do not address the query about 'NIMs', they fail to cover different aspects of the query. They all appear to be AI-related, which is unrelated to the query, indicating no coverage of the intended topic."}}
+INFO:__main__:Query: What is NIMs?
+INFO:__main__:Formatted results: Result 1:
+“Evo 2 represents a major milestone for generative genomics,” said Patrick Hsu, Arc Institute cofounder and core investigator, and an assistant professor of bioengineering at the University of California, Berkeley.  “By advancing our understanding of these fundamental building blocks of life, we can pursue solutions in healthcare and environmental science that are unimaginable today. ”
+The NVIDIA NIM microservice for Evo 2 enables users to generate a variety of biological sequences, with setting...
+Result 2:
+Foundation Models Defined
+A foundation model is an AI neural network — trained on mountains of raw data, generally with unsupervised learning — that can be adapted to accomplish a broad range of tasks.
+Two important concepts help define this umbrella category: Data gathering is easier, and opportunities are as wide as the horizon.
+No Labels, Lots of Opportunity
+Foundation models generally learn from unlabeled datasets, saving the time and expense of manually describing each item in massive col...
+Result 3:
+Its release has been called the iPhone moment for AI because it helped so many people see how they could use the technology.
+One timeline describes the path from early AI research to ChatGPT.  (Source: blog. bytebytego. com)
+Going Multimodal
+Foundation models have also expanded to process and generate multiple data types, or modalities, such as text, images, audio and video.  VLMs are one type of multimodal models that can understand video, image and text inputs while producing text or visual o...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What is NIMs?
+
+Results to evaluate:
+Result 1:
+“Evo 2 represents a major milestone for generative genomics,” said Patrick Hsu, Arc Institute cofounder and core investigator, and an assistant professor of bioengineering at the University of California, Berkeley.  “By advancing our understanding of these fundamental building blocks of life, we can pursue solutions in healthcare and environmental science that are unimaginable today. ”
+The NVIDIA NIM microservice for Evo 2 enables users to generate a variety of biological sequences, with setting...
+Result 2:
+Foundation Models Defined
+A foundation model is an AI neural network — trained on mountains of raw data, generally with unsupervised learning — that can be adapted to accomplish a broad range of tasks.
+Two important concepts help define this umbrella category: Data gathering is easier, and opportunities are as wide as the horizon.
+No Labels, Lots of Opportunity
+Foundation models generally learn from unlabeled datasets, saving the time and expense of manually describing each item in massive col...
+Result 3:
+Its release has been called the iPhone moment for AI because it helped so many people see how they could use the technology.
+One timeline describes the path from early AI research to ChatGPT.  (Source: blog. bytebytego. com)
+Going Multimodal
+Foundation models have also expanded to process and generate multiple data types, or modalities, such as text, images, audio and video.  VLMs are one type of multimodal models that can understand video, image and text inputs while producing text or visual o...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

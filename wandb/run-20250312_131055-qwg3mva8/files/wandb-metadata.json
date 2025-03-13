@@ -1,0 +1,44 @@
+{
+  "os": "macOS-14.7.4-arm64-arm-64bit",
+  "python": "CPython 3.12.5",
+  "startedAt": "2025-03-12T20:10:55.491287Z",
+  "program": "/Users/cory/dev/pinecone-field/wandb-weave/cgi-bin/app.py",
+  "codePath": "cgi-bin/app.py",
+  "git": {
+    "remote": "git@github.com:pinecone-field/wandb-weave.git",
+    "commit": "09fcca03ca8f3ecc4aea57f60b87a2078134d10c"
+  },
+  "email": "cory@pinecone.io",
+  "root": "/Users/cory/dev/pinecone-field/wandb-weave",
+  "host": "Corys-work-MacBook-Pro.local",
+  "executable": "/Users/cory/dev/pinecone-field/wandb-weave/.venv/bin/python3",
+  "codePathLocal": "cgi-bin/app.py",
+  "cpu_count": 10,
+  "cpu_count_logical": 10,
+  "disk": {
+    "/": {
+      "total": "494384795648",
+      "used": "294690811904"
+    },
+    "/System/Volumes/Data": {
+      "total": "494384795648",
+      "used": "294690811904"
+    }
+  },
+  "memory": {
+    "total": "17179869184"
+  },
+  "cpu": {
+    "count": 10,
+    "countLogical": 10
+  },
+  "apple": {
+    "name": "Apple M1 Pro",
+    "ecpuCores": 2,
+    "pcpuCores": 8,
+    "gpuCores": 16,
+    "memoryGb": 16,
+    "swapTotalBytes": "18253611008",
+    "ramTotalBytes": "17179869184"
+  }
+}

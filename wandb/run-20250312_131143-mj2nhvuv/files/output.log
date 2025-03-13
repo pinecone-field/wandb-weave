@@ -1,0 +1,107 @@
+INFO:__main__:Query: What is sovereign AI?
+INFO:__main__:Formatted results: Result 1:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 2:
+You Might Also Like… 
+Firsthand’s Jon Heller Shares How AI Agents Enhance Consumer Journeys in Retail
+Learn how AI agents are transforming the retail landscape by personalizing customer journeys, converting marketing interactions into valuable research data and enhancing the customer experience with hyper-personalized insights and recommendations.
+Snowflake’s Baris Gultekin on Unlocking the Value of Data With Large Language Models
+See how Snowflake’s AI Data Cloud platform helps enterprises unl...
+Result 3:
+Setting Up Students and Professionals for Success
+The Utah AI education initiative will benefit students entering the job market and working professionals by helping them expand their skill sets beyond community college or adult education courses.
+Utah state agencies are exploring how internship and apprenticeship programs can offer students hands-on experience with AI skills, helping bridge the gap between education and industry needs.  This initiative aligns with Utah’s broader goals of foste...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What is sovereign AI?
+
+Results to evaluate:
+Result 1:
+Subscribe to the AI Podcast
+Get the AI Podcast through Amazon Music, Apple Podcasts, Google Podcasts, Google Play, Castbox, DoggCatcher, Overcast, PlayerFM, Pocket Casts, Podbay, PodBean, PodCruncher, PodKicker, SoundCloud, Spotify, Stitcher and TuneIn....
+Result 2:
+You Might Also Like… 
+Firsthand’s Jon Heller Shares How AI Agents Enhance Consumer Journeys in Retail
+Learn how AI agents are transforming the retail landscape by personalizing customer journeys, converting marketing interactions into valuable research data and enhancing the customer experience with hyper-personalized insights and recommendations.
+Snowflake’s Baris Gultekin on Unlocking the Value of Data With Large Language Models
+See how Snowflake’s AI Data Cloud platform helps enterprises unl...
+Result 3:
+Setting Up Students and Professionals for Success
+The Utah AI education initiative will benefit students entering the job market and working professionals by helping them expand their skill sets beyond community college or adult education courses.
+Utah state agencies are exploring how internship and apprenticeship programs can offer students hands-on experience with AI skills, helping bridge the gap between education and industry needs.  This initiative aligns with Utah’s broader goals of foste...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:__main__:Vector evaluation result: {"relevance": 0.0, "diversity": 0.5, "coverage": 0.0, "explanations": {"relevance": "None of the provided results directly address the query regarding the definition or concept of 'sovereign AI'. All results contain general information on AI topics not specific to the concept of sovereign AI.", "diversity": "The results are diverse in that they discuss AI in different contexts: a podcast subscription, AI's role in retail, and AI education in Utah, respectively. Thus, they are non-redundant and cover a variety of topics within the domain of AI.", "coverage": "The query asks for information about the specific concept of 'sovereign AI', but all the results fail to cover this aspect. They do not provide information on sovereign AI, reflecting a lack of coverage on the topic."}}
+INFO:__main__:Query: What is sovereign AI?
+INFO:__main__:Formatted results: Result 1:
+AI’s Emergence and Homogenization
+In that talk, Liang coined two terms to describe foundation models:
+Emergence refers to AI features still being discovered, such as the many nascent skills in foundation models.  He calls the blending of AI algorithms and model architectures homogenization, a trend that helped form foundation models.  (See chart below. )
+The field continues to move fast.
+A year after the group defined foundation models, other tech watchers coined a related term — generative AI....
+Result 2:
+Foundation Models Defined
+A foundation model is an AI neural network — trained on mountains of raw data, generally with unsupervised learning — that can be adapted to accomplish a broad range of tasks.
+Two important concepts help define this umbrella category: Data gathering is easier, and opportunities are as wide as the horizon.
+No Labels, Lots of Opportunity
+Foundation models generally learn from unlabeled datasets, saving the time and expense of manually describing each item in massive col...
+Result 3:
+Of the respondents investing in AI for 5G monetization and/or 6G research and development, 66% are aiming to deploy AI services on RAN for operational and user needs, 53% are aiming to enhance spectral efficiency for the RAN, and 50% are aiming to colocate AI and RAN applications on the same infrastructure.
+Generative AI Goes Mainstream
+Generative AI is gaining significant attention in telecoms.  More than half of survey respondents who said they’re using generative AI have already deployed the...
+INFO:__main__:Final prompt: You are evaluating search results for relevance and diversity.
+
+Query: What is sovereign AI?
+
+Results to evaluate:
+Result 1:
+AI’s Emergence and Homogenization
+In that talk, Liang coined two terms to describe foundation models:
+Emergence refers to AI features still being discovered, such as the many nascent skills in foundation models.  He calls the blending of AI algorithms and model architectures homogenization, a trend that helped form foundation models.  (See chart below. )
+The field continues to move fast.
+A year after the group defined foundation models, other tech watchers coined a related term — generative AI....
+Result 2:
+Foundation Models Defined
+A foundation model is an AI neural network — trained on mountains of raw data, generally with unsupervised learning — that can be adapted to accomplish a broad range of tasks.
+Two important concepts help define this umbrella category: Data gathering is easier, and opportunities are as wide as the horizon.
+No Labels, Lots of Opportunity
+Foundation models generally learn from unlabeled datasets, saving the time and expense of manually describing each item in massive col...
+Result 3:
+Of the respondents investing in AI for 5G monetization and/or 6G research and development, 66% are aiming to deploy AI services on RAN for operational and user needs, 53% are aiming to enhance spectral efficiency for the RAN, and 50% are aiming to colocate AI and RAN applications on the same infrastructure.
+Generative AI Goes Mainstream
+Generative AI is gaining significant attention in telecoms.  More than half of survey respondents who said they’re using generative AI have already deployed the...
+
+Please evaluate these results on:
+1. Relevance: How well do the results answer the query? (0-1 score)
+2. Diversity: How diverse and non-redundant are the results? (0-1 score)
+3. Coverage: How well do the results cover different aspects of the query? (0-1 score)
+
+Return a JSON object with this exact structure:
+{
+  "relevance": <float 0-1>,
+  "diversity": <float 0-1>,
+  "coverage": <float 0-1>,
+  "explanations": {
+    "relevance": "<explanation>",
+    "diversity": "<explanation>",
+    "coverage": "<explanation>"
+  }
+}
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

@@ -1,0 +1,1 @@
+{"_timestamp":1.741804163332397e+09,"_step":0,"_runtime":14.649844,"query":"This is an example query.","rerank_diversity":1,"_wandb":{"runtime":14},"rerank_coverage":0,"vector_relevance":0,"vector_diversity":0.67,"vector_coverage":0,"rerank_relevance":0}

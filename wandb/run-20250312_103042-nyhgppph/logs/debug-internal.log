@@ -1,0 +1,16 @@
+{"time":"2025-03-12T10:30:42.262456-07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/Users/cory/dev/pinecone-field/wandb-weave/wandb/run-20250312_103042-nyhgppph/logs/debug-core.log"}
+{"time":"2025-03-12T10:30:43.125424-07:00","level":"INFO","msg":"created new stream","id":"nyhgppph"}
+{"time":"2025-03-12T10:30:43.125564-07:00","level":"INFO","msg":"stream: started","id":"nyhgppph"}
+{"time":"2025-03-12T10:30:43.125679-07:00","level":"INFO","msg":"handler: started","stream_id":"nyhgppph"}
+{"time":"2025-03-12T10:30:43.125736-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"nyhgppph"}
+{"time":"2025-03-12T10:30:43.125799-07:00","level":"INFO","msg":"sender: started","stream_id":"nyhgppph"}
+{"time":"2025-03-12T10:30:43.535383-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-12T10:31:05.303723-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-12T10:31:05.30487-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-12T10:31:05.770232-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-12T10:31:06.065936-07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-03-12T10:31:06.068818-07:00","level":"INFO","msg":"stream: closing","id":"nyhgppph"}
+{"time":"2025-03-12T10:31:06.068848-07:00","level":"INFO","msg":"handler: closed","stream_id":"nyhgppph"}
+{"time":"2025-03-12T10:31:06.06886-07:00","level":"INFO","msg":"sender: closed","stream_id":"nyhgppph"}
+{"time":"2025-03-12T10:31:06.068855-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"nyhgppph"}
+{"time":"2025-03-12T10:31:06.069858-07:00","level":"INFO","msg":"stream: closed","id":"nyhgppph"}

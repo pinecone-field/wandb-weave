@@ -1,0 +1,16 @@
+{"time":"2025-03-12T13:15:18.033408-07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/Users/cory/dev/pinecone-field/wandb-weave/wandb/run-20250312_131518-gpu7jwqq/logs/debug-core.log"}
+{"time":"2025-03-12T13:15:18.388226-07:00","level":"INFO","msg":"created new stream","id":"gpu7jwqq"}
+{"time":"2025-03-12T13:15:18.388269-07:00","level":"INFO","msg":"stream: started","id":"gpu7jwqq"}
+{"time":"2025-03-12T13:15:18.388273-07:00","level":"INFO","msg":"handler: started","stream_id":"gpu7jwqq"}
+{"time":"2025-03-12T13:15:18.388279-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"gpu7jwqq"}
+{"time":"2025-03-12T13:15:18.388354-07:00","level":"INFO","msg":"sender: started","stream_id":"gpu7jwqq"}
+{"time":"2025-03-12T13:15:18.66782-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-12T13:15:34.8492-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-12T13:15:34.849724-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-12T13:15:35.35044-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-12T13:15:35.527777-07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-03-12T13:15:35.530462-07:00","level":"INFO","msg":"stream: closing","id":"gpu7jwqq"}
+{"time":"2025-03-12T13:15:35.530472-07:00","level":"INFO","msg":"handler: closed","stream_id":"gpu7jwqq"}
+{"time":"2025-03-12T13:15:35.530481-07:00","level":"INFO","msg":"sender: closed","stream_id":"gpu7jwqq"}
+{"time":"2025-03-12T13:15:35.530478-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"gpu7jwqq"}
+{"time":"2025-03-12T13:15:35.53065-07:00","level":"INFO","msg":"stream: closed","id":"gpu7jwqq"}
