@@ -15,7 +15,7 @@ transformers==4.49.0
 weave==0.51.36
 blinker==1.9.0
 markdown-it-py==3.0.0
-h11==0.14.0
+h11==0.16.0
 GitPython==3.1.44
 networkx==3.4.2
 pinecone-plugin-interface==0.0.7
