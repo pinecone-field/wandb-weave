@@ -22,7 +22,7 @@ pinecone-plugin-interface==0.0.7
 starlette==0.36.3
 joblib==1.4.2
 itsdangerous==2.2.0
-setuptools==75.8.2
+setuptools==78.1.1
 rich==13.9.4
 openai==1.66.1
 sentry-sdk==2.22.0
