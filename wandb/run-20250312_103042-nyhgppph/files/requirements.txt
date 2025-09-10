@@ -52,7 +52,7 @@ yarl==1.18.3
 charset-normalizer==3.4.1
 uvicorn==0.29.0
 packaging==24.2
-torch==2.6.0
+torch==2.7.1
 wandb==0.19.8
 scipy==1.15.2
 certifi==2025.1.31
