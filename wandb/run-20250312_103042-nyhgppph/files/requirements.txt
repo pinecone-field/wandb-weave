@@ -81,7 +81,7 @@ backoff==2.2.1
 rpds-py==0.23.1
 platformdirs==4.3.6
 annotated-types==0.7.0
-filelock==3.17.0
+filelock==3.20.1
 aiohappyeyeballs==2.5.0
 numpy==2.2.3
 six==1.17.0
